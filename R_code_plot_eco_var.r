@@ -45,4 +45,4 @@ pairs(meuse)
 
 #question
 #pairing only the elements part of the dataset: how do to that
-#only with cadmiu, copper, lead, zinc
+#only with cadmium, copper, lead, zinc
