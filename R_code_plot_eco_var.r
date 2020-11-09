@@ -46,3 +46,27 @@ pairs(meuse)
 #question
 #pairing only the elements part of the dataset: how do to that
 #only with cadmium, copper, lead, zinc
+
+
+##########################################
+#Lecture n2 with ecological variables
+
+# once sp package is installed we don't have to do it each time
+#but we have to recall it with library(sp)
+
+#we want to make pairs only with copper, lead, zinc, cadmium
+# these variables go from column 3 to 6
+#symbol start,
+#symbol to :
+
+pairs(meuse[,3:6])
+
+#let'use the names of the columns
+#~ by altgr 126
+pairs(~cadmium+copper+lead+zinc, data=meuse)
+
+#let's prettify the graph, chnage color, type of point, caracter exageration
+
+pairs(~cadmium+copper+lead+zinc, data=meuse, col="red")
+pairs(~cadmium+copper+lead+zinc, data=meuse, col="red", pch=2)
+pairs(~cadmium+copper+lead+zinc, data=meuse, col="red", pch=2, cex=2)
