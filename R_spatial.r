@@ -57,6 +57,6 @@ ggplot(d, aes(x=biofuels, y=oxydative)) + geom_polygon() #pratique pour comparer
 ########################################### LET'S IMPORT DATA !
 
 #for Windows
-setwd("C:/lab/")
+setwd("C:/lab/") #let's put the path
 covid <- read.table("covid_agg.csv", head=T)
 covid
