@@ -58,5 +58,16 @@ ggplot(d, aes(x=biofuels, y=oxydative)) + geom_polygon() #pratique pour comparer
 
 #for Windows
 setwd("C:/lab/") #let's put the path
-covid <- read.table("covid_agg.csv", head=T)
+covid <- read.table("covid_agg.csv", head=T) #or header=True works, to say that the first line is the name of the variables, columns, not data !
 covid
+head(covid)
+summary(covid)
+names(covid) #gives the name of the variables
+
+library(ggplot2)
+
+ggplot(covid, aes(x=lon, y=lat)) + geom_point() 
+#1 point per country
+#longitude=moving West to East so it represents x, whereas latitude=moving from South to North so it represents y
+
+ggplot(covid, aes(x=lon, y=lat, size=cases)) + geom_point() #changing the size of the point according to the number of cases
