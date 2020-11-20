@@ -31,3 +31,4 @@ points(covid_planar)
 #putting countries boundaries on top of the map
 
 install.packages("rgdal")
+# when we see a + it means that we haven't finished to tipe the function yet and it asks us to finish it
