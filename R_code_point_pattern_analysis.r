@@ -8,7 +8,7 @@ install.packages("spatstat") #example: we made some samples ramdomly in a field 
 library(spatstat)
 
 setwd("C:/lab/")
-read.table("covid_agg.csv", header=TRUE)
+covid <- read.table("covid_agg.csv", header=TRUE)
 covid
 
 #let's see the covid data density
@@ -39,7 +39,7 @@ coastlines <- readOGR("ne_10m_coastline.shp")
 
 plot(density_map, col=cl)
 points(covid_planar, pch=19, cex=0.5)
-plot(coastlines, add=TRUE) #add=TRUE to put countries on the density map, if not another graph appears with only a worldmap
+plot(coastlines, add=TRUE) #add=TRUE to put countries on top of the density map, if not another graph appears with only a worldmap
 
 #dev.off() pour fermer la fenêtre de graph
 
