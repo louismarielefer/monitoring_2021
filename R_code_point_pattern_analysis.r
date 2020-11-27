@@ -65,6 +65,7 @@ dev.off()
 ############################# INTERPOLATE CASES DATA, what are countries with the highest number of cases
 png("figure2.png")
 pdf("figure2.pdf")
+
 cl <- colorRampPalette(c('pink','green','orange','red','magenta'))(100)
 marks(covid_planar) <- cases # interpolation
 cases_map <- Smooth(covid_planar) # interpolation: what are the values where we did not sample
@@ -73,3 +74,28 @@ plot(coastlines, add = T)
 points(covid_planar)
 
 #China is the country where there is the highest number of cases
+
+########################### plotting points with different sizes related to the number of cases
+
+setwd("C:/lab/")
+
+library(spatstat)
+library(rgdal) #used to plot vectors (points, lines, polygons) as the coastlines map
+
+covid <- read.table("covid_agg.csv", header=TRUE)
+attach(covid)
+
+covid_planar <- ppp(lon,lat,c(-180,180),c(-90,90))
+marks(covid_planar) <- cases #explains that the data we are going to use and focus on are in the column "number of cases"
+cases_map <- Smooth(covid_planar)
+cl <- colorRampPalette(c('lightpink2','lightsalmon','tomato1','red3','maroon'))(100)
+plot(cases_map, col = cl)
+
+install.packages("sf")
+library(sf)
+
+Spoints <- st_as_sf(covid, coords = c("lon", "lat"))
+plot(Spoints, cex=Spoints$cases/10000, col = 'purple3', lwd = 3, add=T) # we divide the number of cases by 10000 otherwise we would have too big circles
+
+coastlines <- readOGR("ne_10m_coastline.shp")
+plot(coastlines, add = T)
