@@ -78,7 +78,6 @@ points(covid_planar)
 ########################### plotting points with different sizes related to the number of cases
 
 setwd("C:/lab/")
-
 library(spatstat)
 library(rgdal) #used to plot vectors (points, lines, polygons) as the coastlines map
 
@@ -99,3 +98,39 @@ plot(Spoints, cex=Spoints$cases/10000, col = 'purple3', lwd = 3, add=T) # we div
 
 coastlines <- readOGR("ne_10m_coastline.shp")
 plot(coastlines, add = T)
+
+############################# code pour enregistrer l'image
+library(spatstat)
+library(rgdal)
+library(sf)
+
+setwd("C:/lab/")
+
+covid <- read.table("covid_agg.csv", header=TRUE)
+attach(covid)
+
+png("figure3.png")
+covid_planar <- ppp(lon,lat,c(-180,180),c(-90,90))
+marks(covid_planar) <- cases #explains that the data we are going to use and focus on are in the column "number of cases"
+cases_map <- Smooth(covid_planar)
+coastlines <- readOGR("ne_10m_coastline.shp")
+Spoints <- st_as_sf(covid, coords = c("lon", "lat"))
+cl <- colorRampPalette(c('lightpink2','lightsalmon','tomato1','red3','maroon'))(100)
+plot(cases_map, col = cl)
+plot(coastlines, add = T)
+plot(Spoints, cex=Spoints$cases/10000, col = 'purple3', lwd = 3, add=T)
+dev.off()
+
+pdf("figure3.pdf")
+covid_planar <- ppp(lon,lat,c(-180,180),c(-90,90))
+marks(covid_planar) <- cases #explains that the data we are going to use and focus on are in the column "number of cases"
+cases_map <- Smooth(covid_planar)
+coastlines <- readOGR("ne_10m_coastline.shp")
+Spoints <- st_as_sf(covid, coords = c("lon", "lat"))
+cl <- colorRampPalette(c('lightpink2','lightsalmon','tomato1','red3','maroon'))(100)
+plot(cases_map, col = cl)
+plot(coastlines, add = T)
+plot(Spoints, cex=Spoints$cases/10000, col = 'purple3', lwd = 3, add=T)
+dev.off()
+
+################################################
