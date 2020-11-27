@@ -66,7 +66,7 @@ dev.off()
 png("figure2.png")
 pdf("figure2.pdf")
 cl <- colorRampPalette(c('pink','green','orange','red','magenta'))(100)
-marks(covid_planar) <- cases
+marks(covid_planar) <- cases # interpolation
 cases_map <- Smooth(covid_planar) # interpolation: what are the values where we did not sample
 plot(cases_map, col = cl)
 plot(coastlines, add = T)
