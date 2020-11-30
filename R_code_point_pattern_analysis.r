@@ -133,4 +133,34 @@ plot(coastlines, add = T)
 plot(Spoints, cex=Spoints$cases/10000, col = 'purple3', lwd = 3, add=T)
 dev.off()
 
-################################################
+################################################ REFERENCE SYSTEMS
+#we can't use the geoid because it is not an euclidian shape (shape that we don't know and that varies depending on the gravitational field)
+#we are going to approximate the geoid by an ellipsoid
+#we are going to use this ellispoide for creating coordinates
+#depending on the ellispoid we are using, coordinates are different
+#actually the worldmap we know is UTM (Universal Transverse Mercator)(en fait sont des fuseaux découpés et mis bout à bout)
+#chaque fuseau est large de 6° de longitude de large
+#au sommet du fuseau, origine de ref par laquelle passe un méridien et si on est à gauche de ce point coord seront<ref et à droite coord>ref
+#ces coordonées sont en mètre: (distance par rapport au méridien de greenwich et distance par rapport à l'équateur) pas sûr du tout
+#################################################### Venice lagoon (Leonardo data)
+setwd("C:/lab/")
+leo <- read.table("dati_zabotti.csv", head=T, sep=",")
+head(leo)
+attach(leo)
+library(spatstat)
+
+summary(leo)#to know min and max of x and y
+leo_ppp <- ppp(x, y, c(2300000,2325000), c(5005000,5045000))
+plot(leo_ppp)
+marks(leo_ppp) <- chlh # pour concentrations les plus élevées, pas densité
+chlh_map <- Smooth(leo_ppp)
+
+density_map <- density(leo_ppp) #densité complètement indépendante de marks et smooth etc
+plot(density_map)
+points(leo_ppp, pch=19, cex=0.5)
+
+#cl <- colorRampPalette(c('pink','green','orange','red','magenta'))(100)
+#cl <- colorRampPalette(c('lightpink2','lightsalmon','tomato1','red3','maroon'))(100)
+cl <- colorRampPalette(c("powderblue","slateblue","steelblue","springgreen1","yellowgreen","yellow2"))(100)
+plot(chlh_map, col=cl)
+points(leo_ppp, pch=19, cex=0.5)
