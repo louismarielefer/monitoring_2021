@@ -150,7 +150,7 @@ attach(leo)
 library(spatstat)
 
 summary(leo)#to know min and max of x and y
-leo_ppp <- ppp(x, y, c(2300000,2325000), c(5005000,5045000))
+leo_ppp <- ppp(x, y, c(2300000,2325000), c(5005000,5045000))#to have a little big bigger window
 plot(leo_ppp)
 marks(leo_ppp) <- chlh # pour concentrations les plus élevées, pas densité
 chlh_map <- Smooth(leo_ppp)
