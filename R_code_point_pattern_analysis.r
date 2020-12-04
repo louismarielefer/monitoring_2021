@@ -164,3 +164,55 @@ points(leo_ppp, pch=19, cex=0.5)
 cl <- colorRampPalette(c("powderblue","slateblue","steelblue","springgreen1","yellowgreen","yellow2"))(100)
 plot(chlh_map, col=cl)
 points(leo_ppp, pch=19, cex=0.5)
+
+
+########################################INTERPOLATION OF STUDENT'S DATA AND START WHERE WE STOPPED LAST TIME
+setwd("C:/lab/")
+load("point_pattern_analysis.RData")"how to load a workspace
+ls() #list of the files that we produced
+head(leo)
+
+library(spatstat)
+attach(leo)
+
+marks(leo_ppp) <- chlh
+chlh_map <- Smooth(leo_ppp)
+#cl <- colorRampPalette(c("powderblue","slateblue","steelblue","springgreen1","yellowgreen","yellow2"))(100)
+cl <- colorRampPalette(c('yellow','orange','red','green'))(100) 
+plot(chlh_map, col=cl)
+points(leo_ppp, pch=19, cex=0.5)
+#lowest values of chlorophylle are in the eastern part of the lagoon because it is the sea
+
+#Exercise: do the same for chlorophylle in the sediments
+
+marks(leo_ppp) <- chls
+chls_map <- Smooth(leo_ppp)#remarque: si on fait pas attention et qu'on écrit <- -Smooth on obtient la map opposée: les plus hautes valeurs deviennent alors les plus basses
+cl <- colorRampPalette(c('yellow','orange','red','green'))(100)
+plot(chls_map, col=cl)
+points(leo_ppp, pch=19, cex=0.5)
+
+#multipannel: how to put several graphs on the same pannel at the same time
+par(mfrow=c(1,3))#1 line and 3 columns
+plot(density_map, col=cl) #first graph
+points(leo_ppp, pch=19, cex=0.5)
+plot(chlh_map, col=cl) #second map
+points(leo_ppp, pch=19, cex=0.5)
+plot(chls_map, col=cl) #third graph
+points(leo_ppp, pch=19, cex=0.5)
+
+#Exercise: now we want 3 row and 1 column
+
+par(mfrow=c(3,1))#1 line and 3 columns
+plot(density_map, col=cl) #first graph
+points(leo_ppp, pch=19, cex=0.5)
+plot(chlh_map, col=cl) #second map
+points(leo_ppp, pch=19, cex=0.5)
+plot(chls_map, col=cl) #third graph
+points(leo_ppp, pch=19, cex=0.5)
+
+#INTERPRETATION
+#higher density parts represent shallow water, more samples have been made there because easier
+#chlorophylle concentration is lower in the eastern part and higher in the north
+#Northern part is also the most protected part of the lagoon so no noises and disturbances
+#sediments have a higher power to catch and store chlorophylle
+#some sediments have even a stronger catch and store power depending on the types
