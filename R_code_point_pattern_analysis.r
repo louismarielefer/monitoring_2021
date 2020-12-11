@@ -140,8 +140,8 @@ dev.off()
 #depending on the ellispoid we are using, coordinates are different
 #actually the worldmap we know is UTM (Universal Transverse Mercator)(en fait sont des fuseaux découpés et mis bout à bout)
 #chaque fuseau est large de 6° de longitude de large
-#au sommet du fuseau, origine de ref par laquelle passe un méridien et si on est à gauche de ce point coord seront<ref et à droite coord>ref
-#ces coordonées sont en mètre: (distance par rapport au méridien de greenwich et distance par rapport à l'équateur) pas sûr du tout
+#au sommet du fuseau, origine de ref par laquelle passe un méridien et si on est à gauche du méridien coord seront<ref et à droite coord>ref
+#ces coordonées sont en mètre: x est la distance par rapport au méridien du fuseau en question et y est la distance par rapport à l'équateur
 #################################################### Venice lagoon (Leonardo data)
 setwd("C:/lab/")
 leo <- read.table("dati_zabotti.csv", head=T, sep=",")
@@ -202,7 +202,7 @@ points(leo_ppp, pch=19, cex=0.5)
 
 #Exercise: now we want 3 row and 1 column
 
-par(mfrow=c(3,1))#1 line and 3 columns
+par(mfrow=c(3,1))#1 column and 3 lines
 plot(density_map, col=cl) #first graph
 points(leo_ppp, pch=19, cex=0.5)
 plot(chlh_map, col=cl) #second map
