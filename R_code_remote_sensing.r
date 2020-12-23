@@ -19,6 +19,5 @@
 #blue(high frequency), green (medium), red(low)
 #the higher the wavelength, the lower the frequency
 
-
-
+################################################################
 install.packages(c("raster","RStoolbox")) #RStoolbox more specific to remote sensing whereas raster deals with pictures, pixels
