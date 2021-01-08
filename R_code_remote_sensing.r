@@ -36,6 +36,7 @@ install.packages(c("raster","RStoolbox")) #RStoolbox more specific to remote sen
 library(raster)
 library(RStoolbox)
 setwd("C:/lab/")
+#let's start with the image of 2011
 p224r63_2011 <- brick("p224r63_2011_masked.grd") #brick function to read raster images
 p224r63_2011
 plot(p224r63_2011)
@@ -72,6 +73,7 @@ plotRGB(p224r63_2011, r=3, g=2, b=1, stretch="Lin")
 #let's add infrared band
 #but the pb is that ith RGB we can only use 3 bands
 # so let's shift by one
+# so let's mount NIR (infrared) ontop the G of RGB
 plotRGB(p224r63_2011, r=4, g=3, b=2, stretch="Lin") #enables us to see details we wouldn't be able to see otherwise
 plotRGB(p224r63_2011, r=3, g=4, b=2, stretch="Lin")
 plotRGB(p224r63_2011, r=3, g=2, b=4, stretch="Lin")
