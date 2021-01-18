@@ -141,6 +141,7 @@ hist(difdvi, col="red") #histrogram
 #dvi 2nd period
 #dvi difference
 
+pdf("Amazonia_deforestation.pdf")
 par(mfrow=c(3,2))
 plotRGB(defor1, r=1, g=2, b=3, stretch="Lin")
 plotRGB(defor2, r=1, g=2, b=3, stretch="Lin")
@@ -148,3 +149,4 @@ plot(dvi1, col=cl, main="biomass before cut")
 plot(dvi2, col=cl, main="biomass after cut")
 plot(difdvi, col=cldif, main="amount of biomass (so energy) lost!")
 hist(difdvi, col="red")
+dev.off()
