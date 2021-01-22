@@ -22,3 +22,16 @@ plot(toct, col=cltjan)
 dift <- tjan - toct
 cldif <- colorRampPalette(c('white','blue','red'))(100) 
 plot(dift, col=cldif)
+
+###########################FEW WORDS ABOUT THE EXAM
+#10 min of presentation
+#5 min of questions
+#the check of our code on github
+#duccio will check our code on github during and after our presentation
+#the questions can be:
+#what to expect
+#what is the ecological point
+#why using this function
+#the results are not the most important, sometimes it is not very visible because we are working on quite a short timeline
+#the most important is the method
+#and above all, the most most important is HAVING FUN !
