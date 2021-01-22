@@ -26,6 +26,8 @@ plot(dift, col=cldif)
 ###########################FEW WORDS ABOUT THE EXAM
 #10 min of presentation
 #5 min of questions
+#either we put the code on the right and the output on the left of the same slide
+#or we can make one slide for the code then another one for the output
 #the check of our code on github
 #duccio will check our code on github during and after our presentation
 #the questions can be:
