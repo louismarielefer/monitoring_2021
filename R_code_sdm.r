@@ -58,8 +58,10 @@ plot(p1, col=cl) #this is the final sdm: we obtain the map of probabilities, O=t
 points(species[species$Occurrence == 1,], pch=17)
 
 #let's put all the different predictors and the final model on one page
+pdf("sdm.pdf")
 s1 <- stack(preds,p1)
 plot(s1, col=cl)
+dev.off()
 #since we're ploting a stack it's harder to add the occurences on it
 #in that case it would be easier to use a par
 #the place is in 30 UTM and that corresponds to Spain
