@@ -17,7 +17,9 @@ plot(fire_end_aug_2018_lay)
 
 global_fire_2020 <- raster("c_gls_BA300_202006200000_GLOBE_PROBAV_V1.1.1.nc")
 plot(global_fire_2020)
-
+ext <- c(100,2150,-50,0)  # xmin xmax ymin ymax
+fire_austr_2020 <- crop(global_fire_2020, ext)
+plot(fire_austr_2020)
 
 par(mfrow=c(3,1))
 plot(fire_beg_aug_2018)
