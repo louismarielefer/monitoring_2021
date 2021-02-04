@@ -27,6 +27,9 @@ plot(fire_austr_jun_2020, col=cl)
 fire_austr_jun_2020_points <- crop(global_fire_jun_2020, ext)
 plot(fire_austr_jun_2020_points)
 
+add <- fire_austr_jun_2020 + fire_austr_jun_2020_points
+plot(add, col=cl)
+
 par(mfrow=c(2,1))
 plot(fire_austr_jun_2020, col=cl)
 plot(fire_austr_jun_2020_points)
@@ -61,7 +64,7 @@ global_fire_dec_2020 <- raster("c_gls_BA300_202012310000_GLOBE_PROBAV_V1.1.1.nc"
 fire_austr_dec_2020 <- crop(global_fire_dec_2020, ext)
 plot(fire_austr_dec_2020)
 
-par(mfrow=c(7,1))
+par(mfrow=c(2,4))
 plot(fire_austr_jun_2020)
 plot(fire_austr_jul_2020)
 plot(fire_austr_aug_2020)
