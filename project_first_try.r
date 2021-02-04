@@ -1,3 +1,4 @@
+######################## TRY BASED ON BURNED AREAS DATA DOWNLOADED FROM COPERNICUS
 library(raster)
 library(ncdf4)
 setwd("C:/lab/")
@@ -77,6 +78,3 @@ dif <- fire_austr_jul_2020 - fire_austr_dec_2020
 cldif <- colorRampPalette(c('blue','white','red'))(100)
 plot(dif, col=cldif)
 #################################################
-fire_aug <- stack(fire_beg_aug_2018,fire_mid_aug_2018,fire_end_aug_2018)
-plot(fire_aug)
-
