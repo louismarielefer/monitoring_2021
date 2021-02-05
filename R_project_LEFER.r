@@ -52,3 +52,4 @@ cldif <- colorRampPalette(c('blue','white','red'))(100)
 plot(dif, col=cldif)
 plot(coastlines, add=TRUE)
 
+cl <- colorRampPalette(c('maroon','red3','tomato1','lightsalmon','lightpink2','yellow2','yellow'))(100)
