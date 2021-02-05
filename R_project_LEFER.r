@@ -32,7 +32,7 @@ fire_austr_2000 <- read.table("modis_2000_Australia.csv", header=TRUE, sep=",")
 summary(fire_austr_2000)
 attach(fire_austr_2000)
 
-fire_austr_2000_planar <- ppp(longitude,latitude,c(113,154),c(-43,-9))
+fire_austr_2000_planar <- ppp(longitude,latitude,c(112,155),c(-44,-8))
 fire_density_map_2000 <- density(fire_austr_2000_planar)
 plot(fire_density_map_2000, col=cl)
 points(fire_austr_2000_planar,col="darkblue", pch=20, cex=0.5)
