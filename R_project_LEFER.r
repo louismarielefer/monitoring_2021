@@ -36,5 +36,19 @@ fire_austr_2000_planar <- ppp(longitude,latitude,c(113,154),c(-43,-9))
 fire_density_map_2000 <- density(fire_austr_2000_planar)
 plot(fire_density_map_2000, col=cl)
 points(fire_austr_2000_planar,col="purple", pch=20, cex=0.5)
+plot(coastlines, add=TRUE)
 
+#################################### 2000 VS 2019
+par(mfrow=c(2,1)) 
+plot(fire_density_map_2000, col=cl)
+points(fire_austr_2000_planar,col="purple", pch=20, cex=0.5)
+plot(coastlines, add=TRUE)
+plot(fire_density_map_2019, col=cl)
+points(fire_austr_2019_planar,col="purple", pch=20, cex=0.5)
+plot(coastlines, add=TRUE)
+
+dif_map <- fire_density_map_2019 - fire_density_map_2000
+cldif <- colorRampPalette(c('blue','white','red'))(100) 
+plot(dif, col=cldif)
+plot(coastlines, add=TRUE)
 
