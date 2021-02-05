@@ -10,7 +10,7 @@ summary(fire_austr_2019) #to determine min and max longitude and latitude and th
 attach(fire_austr_2019)
 
 
-fire_austr_2019_planar <- ppp(longitude,latitude,c(113,154),c(-43,-9)) #ppp planar point pattern, expalin to R that our data are spatial data
+fire_austr_2019_planar <- ppp(longitude,latitude,c(112,155),c(-44,-8)) #ppp planar point pattern, expalin to R that our data are spatial data
 #c() is the range of x(longitude in this case) and range of y(latitude in this case)
 
 fire_density_map_2019 <- density(fire_austr_2019_planar)
@@ -23,7 +23,7 @@ coastlines <- readOGR("ne_10m_coastline.shp")
 cl <- colorRampPalette(c('brown4','red3','red','orange2','orange','yellow2','yellow'))(100) 
 
 plot(fire_density_map_2019, col=cl)
-points(fire_austr_2019_planar,col="purple", pch=20, cex=0.5)
+points(fire_austr_2019_planar,col="darkblue", pch=20, cex=0.5)
 plot(coastlines, add=TRUE)
 
 ###################################### FIRES IN AUSTRALIA IN 2000
@@ -35,16 +35,16 @@ attach(fire_austr_2000)
 fire_austr_2000_planar <- ppp(longitude,latitude,c(113,154),c(-43,-9))
 fire_density_map_2000 <- density(fire_austr_2000_planar)
 plot(fire_density_map_2000, col=cl)
-points(fire_austr_2000_planar,col="purple", pch=20, cex=0.5)
+points(fire_austr_2000_planar,col="darkblue", pch=20, cex=0.5)
 plot(coastlines, add=TRUE)
 
 #################################### 2000 VS 2019
 par(mfrow=c(2,1)) 
 plot(fire_density_map_2000, col=cl)
-points(fire_austr_2000_planar,col="purple", pch=20, cex=0.5)
+points(fire_austr_2000_planar,col="darkblue", pch=20, cex=0.5)
 plot(coastlines, add=TRUE)
 plot(fire_density_map_2019, col=cl)
-points(fire_austr_2019_planar,col="purple", pch=20, cex=0.5)
+points(fire_austr_2019_planar,col="darkblue", pch=20, cex=0.5)
 plot(coastlines, add=TRUE)
 
 dif_map <- fire_density_map_2019 - fire_density_map_2000
