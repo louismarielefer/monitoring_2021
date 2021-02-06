@@ -17,16 +17,17 @@ fire_density_map_2019 <- density(fire_austr_2019_planar)
 
 #putting countries boundaries on top of the map
 library(rgdal)
-
 coastlines <- readOGR("ne_10m_coastline.shp")
+
+library(raster)
 ext <- c(112,155,-44,-8)
 austr_coastlines <- crop(coastlines, ext)
 
 cl <- colorRampPalette(c('brown4','red3','red','orange2','orange','yellow2','yellow'))(100) 
 
-plot(fire_density_map_2019, col=cl)
+plot(fire_density_map_2019, col=cl, main="Density map of burnt areas in Australia (2019)")
 points(fire_austr_2019_planar,col="darkblue", pch=20, cex=0.5)
-plot(coastlines, add=TRUE)
+plot(austr_coastlines, add=TRUE)
 
 ###################################### FIRES IN AUSTRALIA IN 2000
 
@@ -36,18 +37,18 @@ attach(fire_austr_2000)
 
 fire_austr_2000_planar <- ppp(longitude,latitude,c(112,155),c(-44,-8))
 fire_density_map_2000 <- density(fire_austr_2000_planar)
-plot(fire_density_map_2000, col=cl)
+plot(fire_density_map_2000, col=cl, main="Density map of burnt areas in Australia (2000)")
 points(fire_austr_2000_planar,col="darkblue", pch=20, cex=0.5)
-plot(coastlines, add=TRUE)
+plot(austr_coastlines, add=TRUE)
 
 #################################### 2000 VS 2019
 par(mfrow=c(2,1)) 
-plot(fire_density_map_2000, col=cl)
+plot(fire_density_map_2000, col=cl, main="Density map of burnt areas in Australia (2000)")
 points(fire_austr_2000_planar,col="darkblue", pch=20, cex=0.5)
-plot(coastlines, add=TRUE)
-plot(fire_density_map_2019, col=cl)
+plot(austr_coastlines, add=TRUE)
+plot(fire_density_map_2019, col=cl, main="Density map of burnt areas in Australia (2019)")
 points(fire_austr_2019_planar,col="darkblue", pch=20, cex=0.5)
-plot(coastlines, add=TRUE)
+plot(austr_coastlines, add=TRUE)
 
 dif_map <- fire_density_map_2019 - fire_density_map_2000
 cldif <- colorRampPalette(c('blue','white','red'))(100) 
