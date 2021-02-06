@@ -7,7 +7,7 @@ setwd("C:/lab/")
 library(raster)
 
 #land surface temperature in January 2021
-tjan <- raster("c_gls_LST10-DC_202101010000_GLOBE_GEO_V1.2.1.nc")
+tjan <- raster("c_gls_LST10-DC_202101010000_GLOBE_GEO_V1.2.1(1).nc")
 cltjan <- colorRampPalette(c("yellow","orange","red","red4"))(100) 
 plot(tjan, col=cltjan)
 
