@@ -19,6 +19,8 @@ fire_density_map_2019 <- density(fire_austr_2019_planar)
 library(rgdal)
 
 coastlines <- readOGR("ne_10m_coastline.shp")
+ext <- c(112,155,-44,-8)
+austr_coastlines <- crop(coastlines, ext)
 
 cl <- colorRampPalette(c('brown4','red3','red','orange2','orange','yellow2','yellow'))(100) 
 
