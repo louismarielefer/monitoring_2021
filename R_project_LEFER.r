@@ -75,6 +75,7 @@ points(fire_austr_2015_planar,col="darkblue", pch=20, cex=0.5)
 plot(austr_coastlines, add=TRUE)
 
 #################################### COMPARING THE YEARS
+png("Evolution_burnt_areas_2000_2019")
 par(mfrow=c(2,3)) 
 
 plot(fire_density_map_2000, col=cl, main="2000")
@@ -97,11 +98,45 @@ plot(fire_density_map_2019, col=cl, main="2019")
 points(fire_austr_2019_planar,col="darkblue", pch=20, cex=0.5)
 plot(austr_coastlines, add=TRUE)
 
+dev.off()
+
 #we observe a shift from West to North and then from North to East
 ####################################
-dif_map <- fire_density_map_2019 - fire_density_map_2000
-cldif <- colorRampPalette(c('blue','white','red'))(100) 
-plot(dif_map, col=cldif)
-plot(coastlines, add=TRUE)
+dif_map_2005_2000 <- fire_density_map_2005 - fire_density_map_2000
+cldif <- colorRampPalette(c('blue','lightblue','white','red1','red3'))(100) 
+plot(dif_map_2005_2000, col=cldif)
+plot(austr_coastlines, add=TRUE)
+
+dif_map_2010_2005 <- fire_density_map_2010 - fire_density_map_2005
+cldif <- colorRampPalette(c('blue','lightblue','white','red1','red3'))(100) 
+plot(dif_map_2010_2005, col=cldif)
+plot(austr_coastlines, add=TRUE)
+
+dif_map_2015_2010 <- fire_density_map_2015 - fire_density_map_2010
+cldif <- colorRampPalette(c('blue','lightblue','white','red1','red3'))(100) 
+plot(dif_map_2015_2010, col=cldif)
+plot(austr_coastlines, add=TRUE)
+
+dif_map_2019_2015 <- fire_density_map_2019 - fire_density_map_2015
+cldif <- colorRampPalette(c('blue','lightblue','white','red1','red3'))(100) 
+plot(dif_map_2019_2015, col=cldif)
+plot(austr_coastlines, add=TRUE)
+
+png("dif_map_comp")
+par(mfrow=c(2,2))
+
+plot(dif_map_2005_2000, col=cldif)
+plot(austr_coastlines, add=TRUE)
+
+plot(dif_map_2010_2005, col=cldif)
+plot(austr_coastlines, add=TRUE)
+
+plot(dif_map_2015_2010, col=cldif)
+plot(austr_coastlines, add=TRUE)
+
+plot(dif_map_2019_2015, col=cldif)
+plot(austr_coastlines, add=TRUE)
+
+
 
 cl <- colorRampPalette(c('maroon','red3','tomato1','lightsalmon','lightpink2','yellow2','yellow'))(100)
