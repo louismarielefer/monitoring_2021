@@ -41,15 +41,64 @@ plot(fire_density_map_2000, col=cl, main="Density map of burnt areas in Australi
 points(fire_austr_2000_planar,col="darkblue", pch=20, cex=0.5)
 plot(austr_coastlines, add=TRUE)
 
-#################################### 2000 VS 2019
-par(mfrow=c(2,1)) 
-plot(fire_density_map_2000, col=cl, main="Density map of burnt areas in Australia (2000)")
+#################################### FIRES IN AUSTRALIA IN 2005
+fire_austr_2005 <- read.table("modis_2005_Australia.csv", header=TRUE, sep=",")
+summary(fire_austr_2005)
+attach(fire_austr_2005)
+
+fire_austr_2005_planar <- ppp(longitude,latitude,c(112,155),c(-44,-8))
+fire_density_map_2005 <- density(fire_austr_2005_planar)
+plot(fire_density_map_2005, col=cl, main="Density map of burnt areas in Australia (2005)")
+points(fire_austr_2005_planar,col="darkblue", pch=20, cex=0.5)
+plot(austr_coastlines, add=TRUE)
+
+#################################### FIRES IN AUSTRALIA IN 2010
+fire_austr_2010 <- read.table("modis_2010_Australia.csv", header=TRUE, sep=",")
+summary(fire_austr_2010)
+attach(fire_austr_2010)
+
+fire_austr_2010_planar <- ppp(longitude,latitude,c(112,155),c(-44,-8))
+fire_density_map_2010 <- density(fire_austr_2010_planar)µ
+plot(fire_density_map_2010, col=cl, main="Density map of burnt areas in Australia (2010)")
+points(fire_austr_2010_planar,col="darkblue", pch=20, cex=0.5)
+plot(austr_coastlines, add=TRUE)
+
+#################################### FIRES IN AUSTRALIA IN 2015
+fire_austr_2015 <- read.table("modis_2015_Australia.csv", header=TRUE, sep=",")
+summary(fire_austr_2015)
+attach(fire_austr_2015)
+
+fire_austr_2015_planar <- ppp(longitude,latitude,c(112,155),c(-44,-8))
+fire_density_map_2015 <- density(fire_austr_2015_planar)
+plot(fire_density_map_2015, col=cl, main="Density map of burnt areas in Australia (2015)")
+points(fire_austr_2015_planar,col="darkblue", pch=20, cex=0.5)
+plot(austr_coastlines, add=TRUE)
+
+#################################### COMPARING THE YEARS
+par(mfrow=c(2,3)) 
+
+plot(fire_density_map_2000, col=cl, main="2000")
 points(fire_austr_2000_planar,col="darkblue", pch=20, cex=0.5)
 plot(austr_coastlines, add=TRUE)
-plot(fire_density_map_2019, col=cl, main="Density map of burnt areas in Australia (2019)")
+
+plot(fire_density_map_2005, col=cl, main="2005")
+points(fire_austr_2005_planar,col="darkblue", pch=20, cex=0.5)
+plot(austr_coastlines, add=TRUE)
+
+plot(fire_density_map_2010, col=cl, main="2010")
+points(fire_austr_2010_planar,col="darkblue", pch=20, cex=0.5)
+plot(austr_coastlines, add=TRUE)
+
+plot(fire_density_map_2015, col=cl, main="2015")
+points(fire_austr_2015_planar,col="darkblue", pch=20, cex=0.5)
+plot(austr_coastlines, add=TRUE)
+
+plot(fire_density_map_2019, col=cl, main="2019")
 points(fire_austr_2019_planar,col="darkblue", pch=20, cex=0.5)
 plot(austr_coastlines, add=TRUE)
 
+#we observe a shift from West to North and then from North to East
+####################################
 dif_map <- fire_density_map_2019 - fire_density_map_2000
 cldif <- colorRampPalette(c('blue','white','red'))(100) 
 plot(dif_map, col=cldif)
