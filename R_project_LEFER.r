@@ -1,7 +1,10 @@
+################################### 
+
+#FIRES IN AUSTRALIA IN 2019
+
 library(spatstat)
 setwd("C:/lab/")
 
-################################### FIRES IN AUSTRALIA IN 2019
 fire_austr_2019 <- read.table("modis_2019_Australia.csv", header=TRUE, sep=",")
 fire_austr_2019
 head(fire_austr_2019)
@@ -15,7 +18,7 @@ fire_austr_2019_planar <- ppp(longitude,latitude,c(112,155),c(-44,-8)) #ppp plan
 
 fire_density_map_2019 <- density(fire_austr_2019_planar)
 
-#putting countries boundaries on top of the map
+#putting australian boundaries on top of the map
 library(rgdal)
 coastlines <- readOGR("ne_10m_coastline.shp")
 
@@ -29,7 +32,7 @@ plot(fire_density_map_2019, col=cl, main="Density map of burnt areas in Australi
 points(fire_austr_2019_planar,col="darkblue", pch=20, cex=0.5)
 plot(austr_coastlines, add=TRUE)
 
-###################################### FIRES IN AUSTRALIA IN 2000
+# FIRES IN AUSTRALIA IN 2000
 
 fire_austr_2000 <- read.table("modis_2000_Australia.csv", header=TRUE, sep=",")
 summary(fire_austr_2000)
@@ -41,7 +44,7 @@ plot(fire_density_map_2000, col=cl, main="Density map of burnt areas in Australi
 points(fire_austr_2000_planar,col="darkblue", pch=20, cex=0.5)
 plot(austr_coastlines, add=TRUE)
 
-#################################### FIRES IN AUSTRALIA IN 2005
+#FIRES IN AUSTRALIA IN 2005
 fire_austr_2005 <- read.table("modis_2005_Australia.csv", header=TRUE, sep=",")
 summary(fire_austr_2005)
 attach(fire_austr_2005)
@@ -52,7 +55,7 @@ plot(fire_density_map_2005, col=cl, main="Density map of burnt areas in Australi
 points(fire_austr_2005_planar,col="darkblue", pch=20, cex=0.5)
 plot(austr_coastlines, add=TRUE)
 
-#################################### FIRES IN AUSTRALIA IN 2010
+# FIRES IN AUSTRALIA IN 2010
 fire_austr_2010 <- read.table("modis_2010_Australia.csv", header=TRUE, sep=",")
 summary(fire_austr_2010)
 attach(fire_austr_2010)
@@ -63,7 +66,7 @@ plot(fire_density_map_2010, col=cl, main="Density map of burnt areas in Australi
 points(fire_austr_2010_planar,col="darkblue", pch=20, cex=0.5)
 plot(austr_coastlines, add=TRUE)
 
-#################################### FIRES IN AUSTRALIA IN 2015
+# FIRES IN AUSTRALIA IN 2015
 fire_austr_2015 <- read.table("modis_2015_Australia.csv", header=TRUE, sep=",")
 summary(fire_austr_2015)
 attach(fire_austr_2015)
@@ -74,7 +77,7 @@ plot(fire_density_map_2015, col=cl, main="Density map of burnt areas in Australi
 points(fire_austr_2015_planar,col="darkblue", pch=20, cex=0.5)
 plot(austr_coastlines, add=TRUE)
 
-#################################### COMPARING THE YEARS
+# COMPARING THE YEARS
 png("Evolution_burnt_areas_2000_2019")
 par(mfrow=c(2,3)) 
 
@@ -101,26 +104,29 @@ plot(austr_coastlines, add=TRUE)
 dev.off()
 
 #we observe a shift from West to North and then from North to East
-####################################
+
+# HOW MANY NEW BURNT AREAS FROM ONE YEAR TO ANOTHER ?
 dif_map_2005_2000 <- fire_density_map_2005 - fire_density_map_2000
 cldif <- colorRampPalette(c('blue','lightblue','white','red1','red3'))(100) 
 plot(dif_map_2005_2000, col=cldif)
 plot(austr_coastlines, add=TRUE)
 
 dif_map_2010_2005 <- fire_density_map_2010 - fire_density_map_2005
-cldif <- colorRampPalette(c('blue','lightblue','white','red1','red3'))(100) 
 plot(dif_map_2010_2005, col=cldif)
 plot(austr_coastlines, add=TRUE)
 
 dif_map_2015_2010 <- fire_density_map_2015 - fire_density_map_2010
-cldif <- colorRampPalette(c('blue','lightblue','white','red1','red3'))(100) 
 plot(dif_map_2015_2010, col=cldif)
 plot(austr_coastlines, add=TRUE)
 
 dif_map_2019_2015 <- fire_density_map_2019 - fire_density_map_2015
-cldif <- colorRampPalette(c('blue','lightblue','white','red1','red3'))(100) 
 plot(dif_map_2019_2015, col=cldif)
 plot(austr_coastlines, add=TRUE)
+
+dif_map_2019_2000 <- fire_density_map_2019 - fire_density_map_2000
+plot(dif_map_2019_2000, col=cldif)
+plot(austr_coastlines, add=TRUE)
+
 
 png("dif_map_comp")
 par(mfrow=c(2,2))
@@ -137,6 +143,10 @@ plot(austr_coastlines, add=TRUE)
 plot(dif_map_2019_2015, col=cldif)
 plot(austr_coastlines, add=TRUE)
 
+plot(dif_map_2019_2000, col=cldif)
+plot(austr_coastlines, add=TRUE)
 
+dev.off()
 
-cl <- colorRampPalette(c('maroon','red3','tomato1','lightsalmon','lightpink2','yellow2','yellow'))(100)
+################################################"
+
