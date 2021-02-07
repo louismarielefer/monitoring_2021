@@ -152,52 +152,14 @@ dev.off()
 library(raster)
 library(RStoolbox)
 
-before_fire <- raster("before_fire.jpg") #brick function to read raster images
-before_fire
-plot(before_fire)
+
 # B1: blue
 # B2: green
 # B3: red
 # B4: NIR
-#with the min and max values for each color
-cl <- colorRampPalette(c('black','grey','light grey'))(100) 
-plot(p224r63_2011, col=cl)
+before_fire <- brick("before_fire.jpg")
+before_fire
+#image in 8 bits, it means that it has 2^8=256 colors (from 0 to 255)
+#rule: 2^number of bits
 
-par(mfrow=c(2,2)) #pannel with 4 images, 2 lines, 2 columns
-
-clb <- colorRampPalette(c('dark blue','blue','light blue'))(100) #first image blue
-plot(p224r63_2011$B1_sre, col=clb)
-
-clg <- colorRampPalette(c('dark green','green','light green'))(100) #second image green
-plot(p224r63_2011$B2_sre, col=clg)
-
-clr <- colorRampPalette(c('dark red','red','pink'))(100) #3rd image red
-plot(p224r63_2011$B3_sre, col=clr)
-
-# Exercise: plot the final band, namely the NIR, band number 4
-# red, orange, yellow
-
-clnir <- colorRampPalette(c('red','orange','yellow'))(100) #4rd image infrared
-plot(p224r63_2011$B4_sre, col=clnir)
-
-#these bands are all over each others
-
-#how would a human eye see this landscape: RGB system, superposition of the red, green, blue bands
-plotRGB(p224r63_2011, r=3, g=2, b=1, stretch="Lin")
-
-#let's add infrared band
-#but the pb is that ith RGB we can only use 3 bands
-# so let's shift by one
-# so let's mount NIR (infrared) ontop the G of RGB
-plotRGB(p224r63_2011, r=4, g=3, b=2, stretch="Lin") #enables us to see details we wouldn't be able to see otherwise
-plotRGB(p224r63_2011, r=3, g=4, b=2, stretch="Lin")
-plotRGB(p224r63_2011, r=3, g=2, b=4, stretch="Lin")
-
-pdf("monitor_amazonia.pdf")
-par(mfrow=c(2,2))
-plotRGB(p224r63_2011, r=3, g=2, b=1, stretch="Lin")
-plotRGB(p224r63_2011, r=4, g=3, b=2, stretch="Lin")
-plotRGB(p224r63_2011, r=3, g=4, b=2, stretch="Lin")
-plotRGB(p224r63_2011, r=3, g=2, b=4, stretch="Lin")
-dev.off()
-
+plotRGB(before_fire, 1, 2, 3, stretch="Lin")
