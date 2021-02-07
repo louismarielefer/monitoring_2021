@@ -149,22 +149,4 @@ plot(austr_coastlines, add=TRUE)
 dev.off()
 
 ################################################
-library(raster)
-library(RStoolbox)
 
-
-# B1: blue
-# B2: green
-# B3: red
-# B4: NIR
-before_fire <- brick("before_fire.jpg")
-before_fire
-#image in 8 bits, it means that it has 2^8=256 colors (from 0 to 255)
-#rule: 2^number of bits
-
-plotRGB(before_fire, 1, 2, 3, stretch="Lin")
-
-fire <- brick("fire.jpg")
-fire
-
-plotRGB(fire, 1, 2, 3, stretch="Lin")
