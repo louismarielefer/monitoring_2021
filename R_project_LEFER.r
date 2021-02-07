@@ -163,3 +163,8 @@ before_fire
 #rule: 2^number of bits
 
 plotRGB(before_fire, 1, 2, 3, stretch="Lin")
+
+fire <- brick("fire.jpg")
+fire
+
+plotRGB(fire, 1, 2, 3, stretch="Lin")
