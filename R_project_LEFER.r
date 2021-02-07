@@ -150,9 +150,9 @@ dev.off()
 
 ################################################
 library(raster)
+library(RStoolbox)
 
-
-before_fire <- brick("before_fire.jpg") #brick function to read raster images
+before_fire <- raster("before_fire.jpg") #brick function to read raster images
 before_fire
 plot(before_fire)
 # B1: blue
