@@ -154,35 +154,75 @@ dev.off()
 library(raster)
 library(RStoolbox)
 
-#let's start with the image of 2011
-before_fire <- brick("before_fire.jpg")#brick function to read raster images
-before_fire
-plot(before_fire)
-# B1: blue
-# B2: green
-# B3: red
-# B4: NIR
-#with the min and max values for each color
-cl <- colorRampPalette(c('black','grey','light grey'))(100) 
-plot(before_fire, col=cl)
+NP_during_fire <- brick("National_Park_during_fire.jpg") #brick function to read raster images
+NP_during_fire
+plot(NP_during_fire)
+plotRGB(NP_during_fire, r=8, g=4, b=3, stretch="Lin")
 
-par(mfrow=c(2,2)) #pannel with 4 images, 2 lines, 2 columns
+NP_after_fire <- brick("National_Park_after_fire.jpg")
+NP_after_fire
+plot(NP_after_fire)
+plotRGB(NP_during_fire, r=1, g=2, b=3, stretch="Lin")
 
-clb <- colorRampPalette(c('dark blue','blue','light blue'))(100) #first image blue
-plot(before_fire$before_fire.1, col=clb)
+png("National_Park_during_after_fire")
+par(mfrow=c(2,1))
+plotRGB(NP_during_fire, r=1, g=2, b=3, stretch="Lin")
+plotRGB(NP_after_fire, r=1, g=2, b=3, stretch="Lin")
+dev.off()
 
-clg <- colorRampPalette(c('dark green','green','light green'))(100) #second image green
-plot(before_fire$before_fire.2, col=clg)
-
-clr <- colorRampPalette(c('dark red','red','pink'))(100) #3rd image red
-plot(before_fire$before_fire.3, col=clr)
+#################
 
 
-after_fire <- brick("after_fire")
-after_fire
+dvi1 <- NP_during_fire$National_Park_during_fire.1 - NP_during_fire$National_Park_during_fire.2 #defor1$defor1_.1 is the infrared band of the 1st image, defor1_.2 is the red band
+dev.off()
+plot(dvi1)
+cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100) 
+plot(dvi1, col=cl)
 
-par(mfrow=c(1,2))
-plotRGB(before_fire, r=1, g=2, b=3, stretch="Lin")
-plotRGB(after_fire, r=1, g=2, b=3, stretch="Lin")
+#DVI for the 2nd period
+dvi2 <- defor2$defor2_.1 - defor2$defor2_.2
+cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100) # specifying a color scheme
+plot(dvi2, col=cl)
 
+
+par(mfrow=c(2,1))
+plot(dvi1, col=cl)
+plot(dvi2, col=cl)
+
+par(mfrow=c(2,1))
+plot(dvi1, col=cl, main="DVI before cut")
+plot(dvi2, col=cl, main="DVI after cut")
+
+#difference in DVI before and after cut
+difdvi <- dvi1 -dvi2 #the higher is the difference, the higher the deforestation is, perfect image to show the biomass loss
+dev.off()
+plot(difdvi)
+
+cldif <- colorRampPalette(c('blue','white','red'))(100) 
+plot(difdvi, col=cldif)
+
+cldif <- colorRampPalette(c('blue','white','red'))(100) 
+plot(difdvi, col=cldif, main="amount of biomass (and energy) lost!")
+
+hist(difdvi, col="red") #histrogram
+#all the positive values show loss of biomass
+#and we notice that we have a slight number of negative values (vegeatation win)
+#and a huge, huge amount of positive values which show deforestation
+
+#FINAL PAR
+#image1
+#image2
+#dvi 1st period
+#dvi 2nd period
+#dvi difference
+
+pdf("Amazonia_deforestation.pdf")
+par(mfrow=c(3,2))
+plotRGB(defor1, r=1, g=2, b=3, stretch="Lin")
+plotRGB(defor2, r=1, g=2, b=3, stretch="Lin")
+plot(dvi1, col=cl, main="biomass before cut")
+plot(dvi2, col=cl, main="biomass after cut")
+plot(difdvi, col=cldif, main="amount of biomass (so energy) lost!")
+hist(difdvi, col="red")
+dev.off()
 
