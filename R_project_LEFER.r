@@ -205,7 +205,10 @@ dev.off()
 
 #SECOND CONSEQUENCE: IMPACT ON HUMAN HEALTH
 library(ggplot2)
-particles <- read.table("PM10.csv", header=TRUE)
-ggplot(particles) 
 
+particles <- read.table("PM10.csv", header=TRUE, sep=",")
+particles
+names(particles)
+attach(particles)
+ggplot(particles, aes(x=date, y=conc)) + geom_point(col="red", size=2) + geom_line()
 
