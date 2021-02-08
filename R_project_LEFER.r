@@ -148,29 +148,6 @@ plot(austr_coastlines, add=TRUE)
 
 dev.off()
 
-################################################
-library(raster)
-library(RStoolbox)
-
-#for importing data
-#if you have only one layer, function raster is used
-#otherwise (if more than 2, ex: vegetation and infrared), function brick is used
-
-defor1 <- brick("amaz.jpg")
-defor1
-#image in 8 bits, it means that it has 2^8=256 colors (from 0 to 255)
-#rule: 2^number of bits
-
-plotRGB(defor1, 1, 2, 3, stretch="Lin") #plotRGB(defor1, r=1, g=2, b=3, stretch="Lin")
-#infrared in first chanel so we will see it red
-#RGB 3 colors in this order red chanel, green chanel, blue chanel
-#then we have numbers corresponding to colors and we can actually choose the number, the color we want to put into each chanel
-#1:INR
-#2:green
-#3:red
-#4:blue
-
-plotRGB(defor1, 2, 1, 3, stretch="Lin") #green in first chanel #plotRGB(defor1, r=1, g=2, b=3, stretch="Lin")
-
-plotRGB(defor1, 1, 2, 3, stretch="Lin") #infrared in first chanel so we will see it red
+################################################ CONSEQUENCES
+# FIRST CONSEQUENCE: VEGETATION LOSS
 
