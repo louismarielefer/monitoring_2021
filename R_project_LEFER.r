@@ -204,5 +204,8 @@ plot(difdvi, col=cldif, main="amount of biomass lost due to bushfire")
 dev.off()
 
 #SECOND CONSEQUENCE: IMPACT ON HUMAN HEALTH
+library(ggplot2)
+particles <- read.table("PM10.csv", header=TRUE)
+ggplot(particles) 
 
 
