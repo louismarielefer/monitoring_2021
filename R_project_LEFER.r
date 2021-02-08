@@ -148,8 +148,8 @@ plot(austr_coastlines, add=TRUE)
 
 dev.off()
 
-################################################ CONSEQUENCES
-# FIRST CONSEQUENCE: VEGETATION LOSS
+################################################ CONSEQUENCES OF THE BUSHFIRES OF 2019-2020
+# FIRST CONSEQUENCE: BIOMASS LOSS
 
 library(raster)
 library(RStoolbox)
@@ -157,72 +157,52 @@ library(RStoolbox)
 NP_during_fire <- brick("National_Park_during_fire.jpg") #brick function to read raster images
 NP_during_fire
 plot(NP_during_fire)
-plotRGB(NP_during_fire, r=8, g=4, b=3, stretch="Lin")
+plotRGB(NP_during_fire, r=1, g=2, b=3, stretch="Lin", main="During fire")
 
 NP_after_fire <- brick("National_Park_after_fire.jpg")
 NP_after_fire
 plot(NP_after_fire)
-plotRGB(NP_during_fire, r=1, g=2, b=3, stretch="Lin")
+plotRGB(NP_after_fire, r=1, g=2, b=3, stretch="Lin", main="After fire")
 
-png("National_Park_during_after_fire")
+png("National_Park_during_after_fire.png")
 par(mfrow=c(2,1))
-plotRGB(NP_during_fire, r=1, g=2, b=3, stretch="Lin")
-plotRGB(NP_after_fire, r=1, g=2, b=3, stretch="Lin")
+plotRGB(NP_during_fire, r=1, g=2, b=3, stretch="Lin", main="During fire")
+plotRGB(NP_after_fire, r=1, g=2, b=3, stretch="Lin", main="After fire")
 dev.off()
 
-#################
+# COMPARING DVI: DURING VS AFTER FIRE
 
-
-dvi1 <- NP_during_fire$National_Park_during_fire.1 - NP_during_fire$National_Park_during_fire.2 #defor1$defor1_.1 is the infrared band of the 1st image, defor1_.2 is the red band
-dev.off()
-plot(dvi1)
+# DVI DURING FIRE
+dvi_during <- NP_during_fire$National_Park_during_fire.1 - NP_during_fire$National_Park_during_fire.2 #defor1$defor1_.1 is the infrared band of the 1st image, defor1_.2 is the red band
+plot(dvi_during)
 cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100) 
-plot(dvi1, col=cl)
+plot(dvi_during, col=cl)
 
-#DVI for the 2nd period
-dvi2 <- defor2$defor2_.1 - defor2$defor2_.2
-cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100) # specifying a color scheme
-plot(dvi2, col=cl)
+#DVI AFTER FIRE
+dvi_after <- NP_after_fire$National_Park_after_fire.1 - NP_after_fire$National_Park_after_fire.2 #defor1$defor1_.1 is the infrared band of the 1st image, defor1_.2 is the red band
+plot(dvi_after, col=cl)
 
-
-par(mfrow=c(2,1))
-plot(dvi1, col=cl)
-plot(dvi2, col=cl)
 
 par(mfrow=c(2,1))
-plot(dvi1, col=cl, main="DVI before cut")
-plot(dvi2, col=cl, main="DVI after cut")
+plot(dvi_during, col=cl, main="DVI during fire")
+plot(dvi_after, col=cl, main="DVI after fire")
 
-#difference in DVI before and after cut
-difdvi <- dvi1 -dvi2 #the higher is the difference, the higher the deforestation is, perfect image to show the biomass loss
-dev.off()
+#DVI DIFFERENCE DURING AND AFTER FIRE
+difdvi <- dvi_during -dvi_after #the higher is the difference, the higher the biomass loss is, perfect image to show the biomass loss
 plot(difdvi)
 
 cldif <- colorRampPalette(c('blue','white','red'))(100) 
 plot(difdvi, col=cldif)
 
-cldif <- colorRampPalette(c('blue','white','red'))(100) 
-plot(difdvi, col=cldif, main="amount of biomass (and energy) lost!")
-
-hist(difdvi, col="red") #histrogram
-#all the positive values show loss of biomass
-#and we notice that we have a slight number of negative values (vegeatation win)
-#and a huge, huge amount of positive values which show deforestation
-
-#FINAL PAR
-#image1
-#image2
-#dvi 1st period
-#dvi 2nd period
-#dvi difference
-
-pdf("Amazonia_deforestation.pdf")
+png("National_Park_vegetation_loss.png")
 par(mfrow=c(3,2))
-plotRGB(defor1, r=1, g=2, b=3, stretch="Lin")
-plotRGB(defor2, r=1, g=2, b=3, stretch="Lin")
-plot(dvi1, col=cl, main="biomass before cut")
-plot(dvi2, col=cl, main="biomass after cut")
-plot(difdvi, col=cldif, main="amount of biomass (so energy) lost!")
-hist(difdvi, col="red")
+plotRGB(NP_during_fire, r=1, g=2, b=3, stretch="Lin")
+plotRGB(NP_after_fire, r=1, g=2, b=3, stretch="Lin")
+plot(dvi_during, col=cl, main="biomass during fire")
+plot(dvi_after, col=cl, main="biomass after fire")
+plot(difdvi, col=cldif, main="amount of biomass lost due to bushfire")
 dev.off()
+
+#SECOND CONSEQUENCE: IMPACT ON HUMAN HEALTH
+
 
