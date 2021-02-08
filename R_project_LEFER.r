@@ -151,3 +151,48 @@ dev.off()
 ################################################ CONSEQUENCES
 # FIRST CONSEQUENCE: VEGETATION LOSS
 
+library(raster)
+library(RStoolbox)
+
+#let's start with the image of 2011
+before_fire <- brick("before_fire.jpg")#brick function to read raster images
+before_fire
+plot(before_fire)
+# B1: blue
+# B2: green
+# B3: red
+# B4: NIR
+#with the min and max values for each color
+cl <- colorRampPalette(c('black','grey','light grey'))(100) 
+plot(before_fire, col=cl)
+
+par(mfrow=c(2,2)) #pannel with 4 images, 2 lines, 2 columns
+
+clb <- colorRampPalette(c('dark blue','blue','light blue'))(100) #first image blue
+plot(before_fire$before_fire.1, col=clb)
+
+clg <- colorRampPalette(c('dark green','green','light green'))(100) #second image green
+plot(before_fire$before_fire.2, col=clg)
+
+clr <- colorRampPalette(c('dark red','red','pink'))(100) #3rd image red
+plot(before_fire$before_fire.3, col=clr)
+
+# Exercise: plot the final band, namely the NIR, band number 4
+# red, orange, yellow
+
+clnir <- colorRampPalette(c('red','orange','yellow'))(100) #4rd image infrared
+plot(p224r63_2011$B4_sre, col=clnir)
+
+#these bands are all over each others
+
+#how would a human eye see this landscape: RGB system, superposition of the red, green, blue bands
+plotRGB(before_fire, r=1, g=2, b=3, stretch="Lin")
+plotRGB(before_fire, r=3, g=2, b=1, stretch="Lin")
+
+#let's add infrared band
+#but the pb is that with RGB we can only use 3 bands
+# so let's shift by one
+# so let's mount NIR (infrared) ontop the G of RGB
+plotRGB(before_fire, r=4, g=3, b=2, stretch="Lin") #enables us to see details we wouldn't be able to see otherwise
+plotRGB(before_fire, r=3, g=4, b=2, stretch="Lin")
+plotRGB(before_fire, r=3, g=2, b=4, stretch="Lin")
