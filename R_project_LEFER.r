@@ -203,10 +203,12 @@ dev.off()
 
 #SECOND CONSEQUENCE: IMPACT ON HUMAN HEALTH
 library(ggplot2)
+setwd("C:/lab")
 
 particles <- read.table("PM10.csv", header=TRUE, sep=",")
 particles
 names(particles)
 attach(particles)
-ggplot(particles, aes(x=date, y=conc)) + geom_point(col="red", size=2) + geom_path()
+ggplot(particles, aes(x=date, y=conc)) + geom_point(col="red", size=2)+ geom_vline(yintercept=600)
+j+ geom_line()
 
