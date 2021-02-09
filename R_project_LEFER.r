@@ -78,7 +78,7 @@ points(fire_austr_2015_planar,col="darkblue", pch=20, cex=0.5)
 plot(austr_coastlines, add=TRUE)
 
 # COMPARING THE YEARS
-png("Evolution_burnt_areas_2000_2019")
+png("Evolution_burnt_areas_2000_2019.png")
 par(mfrow=c(2,3)) 
 
 plot(fire_density_map_2000, col=cl, main="2000")
@@ -128,7 +128,7 @@ plot(dif_map_2019_2000, col=cldif)
 plot(austr_coastlines, add=TRUE)
 
 
-png("dif_map_comp")
+png("dif_map_comp.png")
 par(mfrow=c(2,2))
 
 plot(dif_map_2005_2000, col=cldif)
@@ -154,7 +154,7 @@ dev.off()
 library(raster)
 library(RStoolbox)
 
-NP_during_fire <- brick("National_Park_during_fire.jpg") #brick function to read raster images
+NP_during_fire <- brick("National_Park_during_fire.jpg") #brick function to read raster images with several layers
 NP_during_fire
 plot(NP_during_fire)
 plotRGB(NP_during_fire, r=1, g=2, b=3, stretch="Lin", main="During fire")
@@ -189,8 +189,6 @@ plot(dvi_after, col=cl, main="DVI after fire")
 
 #DVI DIFFERENCE DURING AND AFTER FIRE
 difdvi <- dvi_during -dvi_after #the higher is the difference, the higher the biomass loss is, perfect image to show the biomass loss
-plot(difdvi)
-
 cldif <- colorRampPalette(c('blue','white','red'))(100) 
 plot(difdvi, col=cldif)
 
@@ -210,5 +208,5 @@ particles <- read.table("PM10.csv", header=TRUE, sep=",")
 particles
 names(particles)
 attach(particles)
-ggplot(particles, aes(x=date, y=conc)) + geom_point(col="red", size=2) + geom_line()
+ggplot(particles, aes(x=date, y=conc)) + geom_point(col="red", size=2) + geom_path()
 
