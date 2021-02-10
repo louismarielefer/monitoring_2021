@@ -1,3 +1,6 @@
+#THIS PROJECT AIMS TO :
+#ASSESS THE SEVERITY OF THE AUSTRALIAN BUSHFIRE SEASON OF 2019-2020
+#UNDERSTAND ITS CAUSES AND CONSEQUENCES
 ################################### 
 
 #FIRES IN AUSTRALIA IN 2019
@@ -149,7 +152,7 @@ plot(austr_coastlines, add=TRUE)
 dev.off()
 
 ################################################ CAUSES OF SUCH STRONG AUSTRALIAN BUSHFIRE SEASON IN 2019-2020
-# FIRST CAUSE: UNUSUAL WARM TEMPERATURE RECORDED IN AUSTRALIA IN 2019
+# FIRST CAUSE: UNSEEN WARM TEMPERATURE RECORDED IN AUSTRALIA IN 2019
 
 setwd("C:/lab/")
 library(ggplot2)
@@ -161,15 +164,26 @@ names(temp_austr)
 summary(temp_austr)
 attach(temp_austr)
 
-ggplot(temp_austr, aes(x=year)) + geom_histogram(bins=30)
-# Changer la largeur des barres
-ggplot(df, aes(x=weight)) + 
-  geom_histogram(binwidth=1)
-# Changer la couleur
-p<-ggplot(df, aes(x=weight)) + 
-  geom_histogram(color="black", fill="white")
+png("barplot_T.png")
+ggplot(temp_austr, aes(x = year, y = devmeanT)) + geom_col(col="red", fill="red", width=0.7) +
+labs(x = "year", y = "Deviation from mean T(°C)", title = "Bar plot showing the difference with the average temperature in Australia for each year from 2000 to 2019")
+dev.off()
+#2019 was the warmest year in the history of Australia
 
-ggplot(temp_austr, aes(x = year, y = T))+geom_col()
+#SECOND CAUSE: UNSEEN DECREASE IN RAINFALLS
+
+rainfall_austr <- read.table("rainfall_Australia_2000_2019.csv", header=TRUE, sep=",")
+rainfall_austr
+head(rainfall_austr)
+names(rainfall_austr)
+summary(rainfall_austr)
+attach(rainfall_austr)
+
+png("barplot_rainfall.png")
+ggplot(rainfall_austr, aes(x = year, y = devmeanrainfall)) + geom_col(col="red", fill="red", width=0.7) +
+labs(x = "year", y = "Deviation from average rainfall (mm)", title = "Bar plot showing the difference with the average rainfall in Australia for each year from 2000 to 2019")
+dev.off()
+#2019 was the driest year in the history of Australia
 
 ################################################ CONSEQUENCES OF THE BUSHFIRES OF 2019-2020
 # FIRST CONSEQUENCE: BIOMASS LOSS
