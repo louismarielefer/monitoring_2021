@@ -148,6 +148,29 @@ plot(austr_coastlines, add=TRUE)
 
 dev.off()
 
+################################################ CAUSES OF SUCH STRONG AUSTRALIAN BUSHFIRE SEASON IN 2019-2020
+# FIRST CAUSE: UNUSUAL WARM TEMPERATURE RECORDED IN AUSTRALIA IN 2019
+
+setwd("C:/lab/")
+library(ggplot2)
+
+temp_austr <- read.table("Temp_Australia_2000_2019.csv", header=TRUE, sep=",")
+temp_austr
+head(temp_austr)
+names(temp_austr)
+summary(temp_austr)
+attach(temp_austr)
+
+ggplot(temp_austr, aes(x=year)) + geom_histogram(bins=30)
+# Changer la largeur des barres
+ggplot(df, aes(x=weight)) + 
+  geom_histogram(binwidth=1)
+# Changer la couleur
+p<-ggplot(df, aes(x=weight)) + 
+  geom_histogram(color="black", fill="white")
+
+ggplot(temp_austr, aes(x = year, y = T))+geom_col()
+
 ################################################ CONSEQUENCES OF THE BUSHFIRES OF 2019-2020
 # FIRST CONSEQUENCE: BIOMASS LOSS
 
