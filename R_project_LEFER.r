@@ -209,6 +209,15 @@ particles <- read.table("PM10.csv", header=TRUE, sep=",")
 particles
 names(particles)
 attach(particles)
-ggplot(particles, aes(x=date, y=conc)) + geom_point(col="red", size=2)+ geom_vline(yintercept=600)
-j+ geom_line()
+
+png("fine_particles.png")
+ggplot(particles, aes(x = date)) +
+geom_point(aes(y = Canberra), col="darkred", pch=16, size=2) +
+geom_point(aes(y = New.Delhi), col="darkblue", pch=16, size=2) +
+geom_line(aes(y = Canberra, group=1, color = "Canberra"), size=1.2) + 
+geom_line(aes(y = New.Delhi, group=1, color = "New Delhi"),size=1.2, linetype="twodash") +
+scale_color_manual(values = c("red", "steelblue")) +
+labs(x = "date", y = "Concentration of PM10 (ug/m3)", title = "Concentration of PM10 fine particles during Australian bushfire season of 2019-2020") +
+geom_hline(yintercept=50, linetype="dashed", color="seagreen4", size=1.2)
+dev.off()
 
