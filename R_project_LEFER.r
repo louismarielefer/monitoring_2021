@@ -236,7 +236,7 @@ dev.off()
 # FIRST CONSEQUENCE: BIOMASS LOSS
 # Let's focus on an area which was severely dammaged by the bushfires of 2019-2020
 #The Kanangra-Boyd National Park located in the Eastern part of Australia
-#download of two images from sentinel hub
+#download of two images from Sentinel Hub
 #National Park during bushfires (December 1st 2019) and after bushfires (January 1st 2020)
 #specific settings in the RGB system r=NIR, g=red, b=green so that we see better the vegetation
 #and to calculate the DVI
@@ -244,11 +244,14 @@ dev.off()
 library(raster)
 library(RStoolbox) #library specific to remote sensing
 
+#National Park during fire
 NP_during_fire <- brick("National_Park_during_fire.jpg") #brick function to read raster images with several layers
 NP_during_fire #to check how many layers
 plot(NP_during_fire) #to see the three different layers: NIR, red, green
-plotRGB(NP_during_fire, r=1, g=2, b=3, stretch="Lin", main="During fire") #plot the National Park during fire with vegetation highlighted in red
+plotRGB(NP_during_fire, r=1, g=2, b=3, stretch="Lin", main="During fire") #r=NIR, g=red, b=green
+#plot the satellite image of the National Park during fire with vegetation highlighted in red
 
+#National Park after fire
 #we do exactly the same for the National Park after fire
 NP_after_fire <- brick("National_Park_after_fire.jpg")
 NP_after_fire
@@ -259,7 +262,9 @@ plotRGB(NP_after_fire, r=1, g=2, b=3, stretch="Lin", main="After fire")
 png("National_Park_during_after_fire.png") #save the panel we are going to create as a png image
 par(mfrow=c(2,1)) #two lines, 1 column
 plotRGB(NP_during_fire, r=1, g=2, b=3, stretch="Lin", main="During fire (December 1st 2019)")
+#plot the satellite image of the National Park during fire with vegetation highlighted in red
 plotRGB(NP_after_fire, r=1, g=2, b=3, stretch="Lin", main="After fire (January 1st 2020)")
+#plot the satellite image of the National Park after fire with vegetation highlighted in red
 dev.off()
 
 # COMPARING DVI: DURING VS AFTER FIRE
@@ -269,22 +274,27 @@ dvi_during <- NP_during_fire$National_Park_during_fire.1 - NP_during_fire$Nation
 #NP_during_fire$National_Park_after_fire.1 is the infrared band of the 1st image 
 #NP_during_fire$National_Park_after_fire.2 is the red band
 cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100) 
+#darkblue for areas where the DVI, so biomass is the lowest
+#black for areas where the DVI, so biomass is the highest
 plot(dvi_during, col=cl)
 
 #DVI AFTER FIRE: we do exactly the same for DVI after fire
 dvi_after <- NP_after_fire$National_Park_after_fire.1 - NP_after_fire$National_Park_after_fire.2
 plot(dvi_after, col=cl)
 
-
-par(mfrow=c(2,1))
-plot(dvi_during, col=cl, main="DVI during fire")
-plot(dvi_after, col=cl, main="DVI after fire")
-
 #DVI DIFFERENCE DURING AND AFTER FIRE
-difdvi <- dvi_during -dvi_after #the higher the difference, the higher the biomass loss is, perfect image to show the biomass loss
-cldif <- colorRampPalette(c('blue','white','red'))(100) 
-plot(difdvi, col=cldif)
+difdvi <- dvi_during -dvi_after #the higher the difference, the higher the biomass loss is
+#perfect image to show the biomass lost due to bushfires
+cldif <- colorRampPalette(c('blue','white','red'))(100) #red areas are the ones where biomass loss was the highest, blue the lowest
 
+png("DVI_comp.png") #save the panel we are creating as png image
+par(mfrow=c(2,2)) # row with 2 lines, 2 columns
+plot(dvi_during, col=cl, main="DVI during fire") #plot DVI map during fire (December 1st 2019)
+plot(dvi_after, col=cl, main="DVI after fire") #plot DVI map after fire (January 1st 2020)
+plot(difdvi, col=cldif, main="DVI difference") #plot map of DVI difference
+dev.off()
+
+#create a panel to have a global view on biomass lost due bushfires
 png("National_Park_vegetation_loss.png")
 par(mfrow=c(3,2))
 plotRGB(NP_during_fire, r=1, g=2, b=3, stretch="Lin")
@@ -295,22 +305,39 @@ plot(difdvi, col=cldif, main="amount of biomass lost due to bushfire")
 dev.off()
 
 #SECOND CONSEQUENCE: IMPACT ON HUMAN HEALTH
-library(ggplot2)
+#GOAL:ASSESS THE CONCENTRATION OF FINE PARTICLES DURING 2019-2020 BUSHFIRE SEASON IN AUSTRALIA
+library(ggplot2) #required to create the graph we want
 setwd("C:/lab")
 
-particles <- read.table("PM10.csv", header=TRUE, sep=",")
+#download data from Air Matters (gives realtime broadcasting air quality information)
+#concentration of PM10 fine particles from 25 December 2019 to 5 January 2020
+# in Canberra and New Delhi
+particles <- read.table("PM10.csv", header=TRUE, sep=",") #read the csv file containing the PM10 concentrations
 particles
-names(particles)
-attach(particles)
+names(particles) #see the names of the variables
+attach(particles) #to use the variables date, Canberra, New Delhi as arguments for after
 
-png("fine_particles.png")
+png("fine_particles.png") #save the graph we are going to create
 ggplot(particles, aes(x = date)) +
-geom_point(aes(y = Canberra), col="darkred", pch=16, size=2) +
-geom_point(aes(y = New.Delhi), col="darkblue", pch=16, size=2) +
-geom_line(aes(y = Canberra, group=1, color = "Canberra"), size=1.2) + 
-geom_line(aes(y = New.Delhi, group=1, color = "New Delhi"),size=1.2, linetype="twodash") +
-scale_color_manual(values = c("red", "steelblue")) +
+geom_point(aes(y = Canberra), col="darkred", pch=16, size=2) + #add the points of the PM10 concentration in Canberra
+geom_point(aes(y = New.Delhi), col="darkblue", pch=16, size=2) + #add the points of the PM10 concentration in New Delhi
+geom_line(aes(y = Canberra, group=1, color = "Canberra"), size=1.2) + #connect the points of the concentration in Canberra
+geom_line(aes(y = New.Delhi, group=1, color = "New Delhi"),size=1.2, linetype="twodash") + #connect the points of the concentration in New Delhi
+scale_color_manual(values = c("red", "steelblue")) + #color Canberra line in red and New Delhi in blue
 labs(x = "date", y = "Concentration of PM10 (ug/m3)", title = "Concentration of PM10 fine particles during Australian bushfire season of 2019-2020") +
-geom_hline(yintercept=50, linetype="dashed", color="seagreen4", size=1.2)
+#add a title to the graph and to the axis
+geom_hline(yintercept=50, linetype="dashed", color="seagreen4", size=1.2) 
+#plot a horizontal line representing the limit of PM10 concentration set by the OMS
 dev.off()
+#in Canberra, max concentration on the 1st January
+#1.6 time higher than in New Delhi
+#far above the limit of 50 ug/m3 set by the OMS
 
+############################################ CONCLUSION
+#the Australian bushfire season of 2019-2020 was definitely the worst in the history of Australia
+#because it affected both North and East of the country compared to the previous years
+#with a high density of fire occurences
+#from 2000 to 2019, we observe a shift in fire occurences: form West to North and then from North to East
+#these strong bushfires were due to the fact that 2019 was the warmest and the driest year in the history of Australia
+#it had severe consequences both on vegetation with an important number of burnt areas
+#and on human health with a concentration of fine particles as high as the ones we can find in the most polluted cities in the world
