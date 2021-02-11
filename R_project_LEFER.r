@@ -1,12 +1,13 @@
 #THIS PROJECT AIMS TO :
 #ASSESS THE SEVERITY OF THE AUSTRALIAN BUSHFIRE SEASON OF 2019-2020
 #UNDERSTAND ITS CAUSES AND CONSEQUENCES
-################################### 
 
-#FIRES IN AUSTRALIA IN 2019
+################################### FIRST STEP:ASSESS THE SEVERITY OF THE AUSTRALIAN BUSHFIRE SEASON OF 2019-2020
+
+#BUSHFIRES IN AUSTRALIA IN 2019
 
 library(spatstat)
-setwd("C:/lab/")
+setwd("C:/lab/") 
 
 fire_austr_2019 <- read.table("modis_2019_Australia.csv", header=TRUE, sep=",")
 fire_austr_2019
@@ -106,7 +107,7 @@ plot(austr_coastlines, add=TRUE)
 
 dev.off()
 
-#we observe a shift from West to North and then from North to East
+#Conclusion: we observe a shift from West to North and then from North to East
 
 # HOW MANY NEW BURNT AREAS FROM ONE YEAR TO ANOTHER ?
 dif_map_2005_2000 <- fire_density_map_2005 - fire_density_map_2000
@@ -151,8 +152,8 @@ plot(austr_coastlines, add=TRUE)
 
 dev.off()
 
-################################################ CAUSES OF SUCH STRONG AUSTRALIAN BUSHFIRE SEASON IN 2019-2020
-# FIRST CAUSE: UNSEEN WARM TEMPERATURE RECORDED IN AUSTRALIA IN 2019
+################################################ SECOND STEP: UNDERSTAND THE CAUSES OF SUCH SEVERE BUSHFIRES IN 2019-2020
+# FIRST CAUSE: EXTREME WARM TEMPERATURE RECORDED IN AUSTRALIA IN 2019
 
 setwd("C:/lab/")
 library(ggplot2)
@@ -168,9 +169,9 @@ png("barplot_T.png")
 ggplot(temp_austr, aes(x = year, y = devmeanT)) + geom_col(col="red", fill="red", width=0.7) +
 labs(x = "year", y = "Deviation from mean T(°C)", title = "Bar plot showing the difference with the average temperature in Australia for each year from 2000 to 2019")
 dev.off()
-#2019 was the warmest year in the history of Australia
+#Conclusion: 2019 was the warmest year in the history of Australia
 
-#SECOND CAUSE: UNSEEN DECREASE IN RAINFALLS
+#SECOND CAUSE: EXTREME DECREASE IN RAINFALLS IN 2019
 
 rainfall_austr <- read.table("rainfall_Australia_2000_2019.csv", header=TRUE, sep=",")
 rainfall_austr
@@ -183,13 +184,13 @@ png("barplot_rainfall.png")
 ggplot(rainfall_austr, aes(x = year, y = devmeanrainfall)) + geom_col(col="red", fill="red", width=0.7) +
 labs(x = "year", y = "Deviation from average rainfall (mm)", title = "Bar plot showing the difference with the average rainfall in Australia for each year from 2000 to 2019")
 dev.off()
-#2019 was the driest year in the history of Australia
+#Conclusion: 2019 was the driest year in the history of Australia
 
-################################################ CONSEQUENCES OF THE BUSHFIRES OF 2019-2020
+################################################ THIRD STEP: UNDERSTAND THE CONSEQUENCES OF THE BUSHFIRES OF 2019-2020
 # FIRST CONSEQUENCE: BIOMASS LOSS
 
 library(raster)
-library(RStoolbox)
+library(RStoolbox) #library specific to remote sensing
 
 NP_during_fire <- brick("National_Park_during_fire.jpg") #brick function to read raster images with several layers
 NP_during_fire
@@ -216,7 +217,9 @@ cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100)
 plot(dvi_during, col=cl)
 
 #DVI AFTER FIRE
-dvi_after <- NP_after_fire$National_Park_after_fire.1 - NP_after_fire$National_Park_after_fire.2 #defor1$defor1_.1 is the infrared band of the 1st image, defor1_.2 is the red band
+dvi_after <- NP_after_fire$National_Park_after_fire.1 - NP_after_fire$National_Park_after_fire.2
+#NP_after_fire$National_Park_after_fire.1 is the infrared band of the 1st image, 
+#NP_after_fire$National_Park_after_fire.2 is the red band
 plot(dvi_after, col=cl)
 
 
@@ -225,7 +228,7 @@ plot(dvi_during, col=cl, main="DVI during fire")
 plot(dvi_after, col=cl, main="DVI after fire")
 
 #DVI DIFFERENCE DURING AND AFTER FIRE
-difdvi <- dvi_during -dvi_after #the higher is the difference, the higher the biomass loss is, perfect image to show the biomass loss
+difdvi <- dvi_during -dvi_after #the higher the difference, the higher the biomass loss is, perfect image to show the biomass loss
 cldif <- colorRampPalette(c('blue','white','red'))(100) 
 plot(difdvi, col=cldif)
 
