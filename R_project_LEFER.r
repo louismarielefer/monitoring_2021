@@ -94,7 +94,7 @@ points(fire_austr_2015_planar,col="darkblue", pch=20, cex=0.1)
 plot(austr_coastlines, add=TRUE)
 
 # COMPARING THE DIFFERENT DENSITY MAPS
-png("Evolution_fire_occurences_2000_2019.png") #to save the panel we are going to create as a png image
+png("Evolution_fire_occurences_2000_2019.png") #to save the panel of density maps we are going to create as a png image
 par(mfrow=c(2,3)) #we create a row of 2 lines and 3 columns
 #let's plot the different density maps in the chronological order
 
@@ -127,45 +127,65 @@ dev.off()
 
 #Conclusion: we observe a shift of fire occurences from West to North and then from North to East
 
-# HOW MANY NEW FIRES OCCURENCES FROM ONE YEAR TO ANOTHER ?
-dif_map_2005_2000 <- fire_density_map_2005 - fire_density_map_2000
-cldif <- colorRampPalette(c('blue','lightblue','white','red1','red3'))(100) 
-plot(dif_map_2005_2000, col=cldif)
-plot(austr_coastlines, add=TRUE)
+# HOW MANY NEW FIRE OCCURENCES FROM ONE YEAR TO ANOTHER ?
+#to answer it: we are going to make the difference of the density maps for two successive years
 
+#difference map 2005-2000
+png("dif_map_2005_2000.png") #save the difference map as a png image
+dif_map_2005_2000 <- fire_density_map_2005 - fire_density_map_2000 #making the difference between the density map of 2005 and the one of 2000
+cldif <- colorRampPalette(c('blue','lightblue','white','red1','red3'))(100) #lowest changes in blue, highest in red
+plot(dif_map_2005_2000, col=cldif, main="2005-2000") #plot the difference map
+plot(austr_coastlines, add=TRUE) #add the Ausralian coastlines on top
+dev.off()
+
+#we do exactly the same for the following years
+
+#difference map 2010-2005
 dif_map_2010_2005 <- fire_density_map_2010 - fire_density_map_2005
-plot(dif_map_2010_2005, col=cldif)
+plot(dif_map_2010_2005, col=cldif, main="2010-2005")
 plot(austr_coastlines, add=TRUE)
 
+#difference map 2015-2010
 dif_map_2015_2010 <- fire_density_map_2015 - fire_density_map_2010
-plot(dif_map_2015_2010, col=cldif)
+plot(dif_map_2015_2010, col=cldif, main="2015-2010")
 plot(austr_coastlines, add=TRUE)
 
+#difference map 2019-2015
 dif_map_2019_2015 <- fire_density_map_2019 - fire_density_map_2015
-plot(dif_map_2019_2015, col=cldif)
+plot(dif_map_2019_2015, col=cldif, main="2019-2015")
 plot(austr_coastlines, add=TRUE)
 
+#difference map 2019-2000
+#to assess how many new fire occurences in 19 years
+png("dif_map_2019_2000.png")
 dif_map_2019_2000 <- fire_density_map_2019 - fire_density_map_2000
-plot(dif_map_2019_2000, col=cldif)
+plot(dif_map_2019_2000, col=cldif, main="2019-2000")
+plot(austr_coastlines, add=TRUE)
+dev.off()
+
+#COMPARING THE DIFFERENCE MAPS
+
+png("dif_map_comp.png") #to save the panel of difference maps we are going to create as a png image
+par(mfrow=c(2,3)) #row of two lines, two columns
+
+#plot the difference map "2005-2000"
+plot(dif_map_2005_2000, col=cldif, main="2005-2000")
 plot(austr_coastlines, add=TRUE)
 
-
-png("dif_map_comp.png")
-par(mfrow=c(2,2))
-
-plot(dif_map_2005_2000, col=cldif)
+#plot the difference map "2010-2005"
+plot(dif_map_2010_2005, col=cldif, main="2010-2005")
 plot(austr_coastlines, add=TRUE)
 
-plot(dif_map_2010_2005, col=cldif)
+#plot the difference map "2015-2010"
+plot(dif_map_2015_2010, col=cldif, main="2015-2010")
 plot(austr_coastlines, add=TRUE)
 
-plot(dif_map_2015_2010, col=cldif)
+#plot the difference map "2019-2015"
+plot(dif_map_2019_2015, col=cldif, main="2019-2015")
 plot(austr_coastlines, add=TRUE)
 
-plot(dif_map_2019_2015, col=cldif)
-plot(austr_coastlines, add=TRUE)
-
-plot(dif_map_2019_2000, col=cldif)
+#plot the difference map "2019-2000"
+plot(dif_map_2019_2000, col=cldif, main="2019-2000")
 plot(austr_coastlines, add=TRUE)
 
 dev.off()
@@ -174,7 +194,7 @@ dev.off()
 # FIRST CAUSE: EXTREME WARM TEMPERATURE RECORDED IN AUSTRALIA IN 2019
 
 setwd("C:/lab/")
-library(ggplot2)
+library(ggplot2) #required to create barplot
 
 temp_austr <- read.table("Temp_Australia_2000_2019.csv", header=TRUE, sep=",")
 temp_austr
