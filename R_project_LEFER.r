@@ -193,24 +193,31 @@ dev.off()
 ################################################ SECOND STEP: UNDERSTAND THE CAUSES OF SUCH SEVERE BUSHFIRES IN 2019-2020
 # FIRST CAUSE: EXTREME WARM TEMPERATURE RECORDED IN AUSTRALIA IN 2019
 
-setwd("C:/lab/")
+setwd("C:/lab/") #setting the working directory
 library(ggplot2) #required to create barplot
 
+# download data from the Australian Bureau of Meteorology
+# read the csv file containing the difference with the mean Temperature in Australia for each year from 2000 to 2019
 temp_austr <- read.table("Temp_Australia_2000_2019.csv", header=TRUE, sep=",")
 temp_austr
 head(temp_austr)
-names(temp_austr)
-summary(temp_austr)
-attach(temp_austr)
+names(temp_austr) #to see the names of the variables: year and devmeanT
+summary(temp_austr) #to see the maximum difference with the mean Temperature
+attach(temp_austr) #needed in order to use the variables year and devmeanT as arguments for after
 
-png("barplot_T.png")
-ggplot(temp_austr, aes(x = year, y = devmeanT)) + geom_col(col="red", fill="red", width=0.7) +
+png("barplot_T.png") #save the barplot we are going to create as a png image
+ggplot(temp_austr, aes(x = year, y = devmeanT)) + 
+geom_col(col="red", fill="red", width=0.7) + #create a barplot with bars filled with red, also change the width of the bars
+geom_hline(yintercept=1.52, linetype="dashed", color="red3", size=1.2) + #add a horizontal line highlighting the highest positive difference with the mean T
 labs(x = "year", y = "Deviation from mean T(°C)", title = "Bar plot showing the difference with the average temperature in Australia for each year from 2000 to 2019")
+#add a title to the axis and to the barplot
 dev.off()
 #Conclusion: 2019 was the warmest year in the history of Australia
 
 #SECOND CAUSE: EXTREME DECREASE IN RAINFALLS IN 2019
-
+# download data from the Australian Bureau of Meteorology
+# read the csv file containing the difference with the average rainfall in Australia for each year from 2000 to 2019
+#we do exactly the same as we did for the previous barplot
 rainfall_austr <- read.table("rainfall_Australia_2000_2019.csv", header=TRUE, sep=",")
 rainfall_austr
 head(rainfall_austr)
@@ -220,28 +227,37 @@ attach(rainfall_austr)
 
 png("barplot_rainfall.png")
 ggplot(rainfall_austr, aes(x = year, y = devmeanrainfall)) + geom_col(col="red", fill="red", width=0.7) +
+geom_hline(yintercept=-187.56, linetype="dashed", color="red3", size=1.2) + #add a horizontal line highlighting the highest negative difference with the average rainfall
 labs(x = "year", y = "Deviation from average rainfall (mm)", title = "Bar plot showing the difference with the average rainfall in Australia for each year from 2000 to 2019")
 dev.off()
 #Conclusion: 2019 was the driest year in the history of Australia
 
-################################################ THIRD STEP: UNDERSTAND THE CONSEQUENCES OF THE BUSHFIRES OF 2019-2020
+################################################ THIRD STEP: UNDERSTAND THE CONSEQUENCES OF THE BUSHFIRES OF 2019-2020 ON VEGETATION AND HUMAN HEALTH
 # FIRST CONSEQUENCE: BIOMASS LOSS
+# Let's focus on an area which was severely dammaged by the bushfires of 2019-2020
+#The Kanangra-Boyd National Park located in the Eastern part of Australia
+#download of two images from sentinel hub
+#National Park during bushfires (December 1st 2019) and after bushfires (January 1st 2020)
+#specific settings in the RGB system r=NIR, g=red, b=green so that we see better the vegetation
+#and to calculate the DVI
 
 library(raster)
 library(RStoolbox) #library specific to remote sensing
 
 NP_during_fire <- brick("National_Park_during_fire.jpg") #brick function to read raster images with several layers
-NP_during_fire
-plot(NP_during_fire)
-plotRGB(NP_during_fire, r=1, g=2, b=3, stretch="Lin", main="During fire")
+NP_during_fire #to check how many layers
+plot(NP_during_fire) #to see the three different layers: NIR, red, green
+plotRGB(NP_during_fire, r=1, g=2, b=3, stretch="Lin", main="During fire") #plot the National Park during fire with vegetation highlighted in red
 
+#we do exactly the same for the National Park after fire
 NP_after_fire <- brick("National_Park_after_fire.jpg")
 NP_after_fire
 plot(NP_after_fire)
 plotRGB(NP_after_fire, r=1, g=2, b=3, stretch="Lin", main="After fire")
 
-png("National_Park_during_after_fire.png")
-par(mfrow=c(2,1))
+# compare the National Park during and after fire
+png("National_Park_during_after_fire.png") #save the panel we are going to create as a png image
+par(mfrow=c(2,1)) #two lines, 1 column
 plotRGB(NP_during_fire, r=1, g=2, b=3, stretch="Lin", main="During fire (December 1st 2019)")
 plotRGB(NP_after_fire, r=1, g=2, b=3, stretch="Lin", main="After fire (January 1st 2020)")
 dev.off()
@@ -249,15 +265,14 @@ dev.off()
 # COMPARING DVI: DURING VS AFTER FIRE
 
 # DVI DURING FIRE
-dvi_during <- NP_during_fire$National_Park_during_fire.1 - NP_during_fire$National_Park_during_fire.2 #defor1$defor1_.1 is the infrared band of the 1st image, defor1_.2 is the red band
-plot(dvi_during)
+dvi_during <- NP_during_fire$National_Park_during_fire.1 - NP_during_fire$National_Park_during_fire.2 #calculate the DVI during fire
+#NP_during_fire$National_Park_after_fire.1 is the infrared band of the 1st image 
+#NP_during_fire$National_Park_after_fire.2 is the red band
 cl <- colorRampPalette(c('darkblue','yellow','red','black'))(100) 
 plot(dvi_during, col=cl)
 
-#DVI AFTER FIRE
+#DVI AFTER FIRE: we do exactly the same for DVI after fire
 dvi_after <- NP_after_fire$National_Park_after_fire.1 - NP_after_fire$National_Park_after_fire.2
-#NP_after_fire$National_Park_after_fire.1 is the infrared band of the 1st image, 
-#NP_after_fire$National_Park_after_fire.2 is the red band
 plot(dvi_after, col=cl)
 
 
