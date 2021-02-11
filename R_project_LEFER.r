@@ -204,8 +204,8 @@ plotRGB(NP_after_fire, r=1, g=2, b=3, stretch="Lin", main="After fire")
 
 png("National_Park_during_after_fire.png")
 par(mfrow=c(2,1))
-plotRGB(NP_during_fire, r=1, g=2, b=3, stretch="Lin", main="During fire")
-plotRGB(NP_after_fire, r=1, g=2, b=3, stretch="Lin", main="After fire")
+plotRGB(NP_during_fire, r=1, g=2, b=3, stretch="Lin", main="During fire (December 1st 2019)")
+plotRGB(NP_after_fire, r=1, g=2, b=3, stretch="Lin", main="After fire (January 1st 2020)")
 dev.off()
 
 # COMPARING DVI: DURING VS AFTER FIRE
