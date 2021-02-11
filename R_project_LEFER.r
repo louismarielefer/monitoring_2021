@@ -1,42 +1,49 @@
-#
+#THE AUSTRALIAN BUSHFIRE SEASON OF 2019-2020
 
 #THIS PROJECT AIMS TO :
 #ASSESS THE SEVERITY OF THE AUSTRALIAN BUSHFIRE SEASON OF 2019-2020
-#UNDERSTAND ITS CAUSES AND CONSEQUENCES
+#UNDERSTAND ITS CAUSES
+#UNDERSTAND ITS CONSEQUENCES ON VEGETATION AND HUMAN HEALTH
 
 ################################### FIRST STEP:ASSESS THE SEVERITY OF THE AUSTRALIAN BUSHFIRE SEASON OF 2019-2020
+#download data of fire occurences from FIRMs (Fire Information for Resource Management System) from NASA
+#download data of 2000, 2005, 2010, 2015, 2019
+#goal: plot a density map of fire occurences for each year in order to compare them
 
 #BUSHFIRES IN AUSTRALIA IN 2019
 
-library(spatstat)
-setwd("C:/lab/") 
+library(spatstat) #required for plotting density map
+setwd("C:/lab/") #setting the working directory
 
-fire_austr_2019 <- read.table("modis_2019_Australia.csv", header=TRUE, sep=",")
+fire_austr_2019 <- read.table("modis_2019_Australia.csv", header=TRUE, sep=",") #read the FIRMS csv file where locations of fire occurences of 2019 are contained (long and lat)
 fire_austr_2019
 head(fire_austr_2019)
-names(fire_austr_2019)
-summary(fire_austr_2019) #to determine min and max longitude and latitude and then using them for plotting the density map
-attach(fire_austr_2019)
+names(fire_austr_2019) #see the names of the variables
+summary(fire_austr_2019) #to have an idea of min and max longitude and latitude and then using them for plotting the density map
+attach(fire_austr_2019) #to use longitude and latitude after
 
 
 fire_austr_2019_planar <- ppp(longitude,latitude,c(112,155),c(-44,-8)) #ppp planar point pattern, expalin to R that our data are spatial data
-#c() is the range of x(longitude in this case) and range of y(latitude in this case)
+#c(112,155),c(-44,-8)) is the range of longitude and latitude in which Auxtralia is located
 
-fire_density_map_2019 <- density(fire_austr_2019_planar)
+fire_density_map_2019 <- density(fire_austr_2019_planar) #create a density map of fire occurences
 
-#putting australian boundaries on top of the map
 library(rgdal)
-coastlines <- readOGR("ne_10m_coastline.shp")
+coastlines <- readOGR("ne_10m_coastline.shp") #read the shapefile of global coastlines
 
 library(raster)
-ext <- c(112,155,-44,-8)
-austr_coastlines <- crop(coastlines, ext)
+ext <- c(112,155,-44,-8) #we create an extension corresponding to the boundaries of Australia
+austr_coastlines <- crop(coastlines, ext) #we only select the coastlines of Australia among the global coastlines
 
 cl <- colorRampPalette(c('brown4','red3','red','orange2','orange','yellow2','yellow'))(100) 
 
-plot(fire_density_map_2019, col=cl, main="Density map of burnt areas in Australia (2019)")
-points(fire_austr_2019_planar,col="darkblue", pch=20, cex=0.5)
-plot(austr_coastlines, add=TRUE)
+png("fire_density_map_2019.png") #to save the density map as a png image
+plot(fire_density_map_2019, col=cl, main="Density map of fire occurences in Australia (2019)") #plot the density map with a title
+points(fire_austr_2019_planar,col="darkblue", pch=20, cex=0.1) #add fire occurences on top in darkblue
+plot(austr_coastlines, add=TRUE) #add Australian coastlines on top
+dev.off()
+
+#We do exactly the same for the years 2000, 2005, 2010, 2015
 
 # FIRES IN AUSTRALIA IN 2000
 
@@ -46,9 +53,12 @@ attach(fire_austr_2000)
 
 fire_austr_2000_planar <- ppp(longitude,latitude,c(112,155),c(-44,-8))
 fire_density_map_2000 <- density(fire_austr_2000_planar)
+
+png("fire_density_map_2000.png")
 plot(fire_density_map_2000, col=cl, main="Density map of burnt areas in Australia (2000)")
-points(fire_austr_2000_planar,col="darkblue", pch=20, cex=0.5)
+points(fire_austr_2000_planar,col="darkblue", pch=20, cex=0.1)
 plot(austr_coastlines, add=TRUE)
+dev.off()
 
 #FIRES IN AUSTRALIA IN 2005
 fire_austr_2005 <- read.table("modis_2005_Australia.csv", header=TRUE, sep=",")
@@ -58,7 +68,7 @@ attach(fire_austr_2005)
 fire_austr_2005_planar <- ppp(longitude,latitude,c(112,155),c(-44,-8))
 fire_density_map_2005 <- density(fire_austr_2005_planar)
 plot(fire_density_map_2005, col=cl, main="Density map of burnt areas in Australia (2005)")
-points(fire_austr_2005_planar,col="darkblue", pch=20, cex=0.5)
+points(fire_austr_2005_planar,col="darkblue", pch=20, cex=0.1)
 plot(austr_coastlines, add=TRUE)
 
 # FIRES IN AUSTRALIA IN 2010
@@ -67,9 +77,9 @@ summary(fire_austr_2010)
 attach(fire_austr_2010)
 
 fire_austr_2010_planar <- ppp(longitude,latitude,c(112,155),c(-44,-8))
-fire_density_map_2010 <- density(fire_austr_2010_planar)µ
+fire_density_map_2010 <- density(fire_austr_2010_planar)
 plot(fire_density_map_2010, col=cl, main="Density map of burnt areas in Australia (2010)")
-points(fire_austr_2010_planar,col="darkblue", pch=20, cex=0.5)
+points(fire_austr_2010_planar,col="darkblue", pch=20, cex=0.1)
 plot(austr_coastlines, add=TRUE)
 
 # FIRES IN AUSTRALIA IN 2015
@@ -80,38 +90,44 @@ attach(fire_austr_2015)
 fire_austr_2015_planar <- ppp(longitude,latitude,c(112,155),c(-44,-8))
 fire_density_map_2015 <- density(fire_austr_2015_planar)
 plot(fire_density_map_2015, col=cl, main="Density map of burnt areas in Australia (2015)")
-points(fire_austr_2015_planar,col="darkblue", pch=20, cex=0.5)
+points(fire_austr_2015_planar,col="darkblue", pch=20, cex=0.1)
 plot(austr_coastlines, add=TRUE)
 
-# COMPARING THE YEARS
-png("Evolution_burnt_areas_2000_2019.png")
-par(mfrow=c(2,3)) 
+# COMPARING THE DIFFERENT DENSITY MAPS
+png("Evolution_fire_occurences_2000_2019.png") #to save the panel we are going to create as a png image
+par(mfrow=c(2,3)) #we create a row of 2 lines and 3 columns
+#let's plot the different density maps in the chronological order
 
+#we plot the density map of fire occurences of 2000
 plot(fire_density_map_2000, col=cl, main="2000")
-points(fire_austr_2000_planar,col="darkblue", pch=20, cex=0.5)
+points(fire_austr_2000_planar,col="darkblue", pch=20, cex=0.1)
 plot(austr_coastlines, add=TRUE)
 
+#we plot the density map of fire occurences of 2005
 plot(fire_density_map_2005, col=cl, main="2005")
-points(fire_austr_2005_planar,col="darkblue", pch=20, cex=0.5)
+points(fire_austr_2005_planar,col="darkblue", pch=20, cex=0.1)
 plot(austr_coastlines, add=TRUE)
 
+#we plot the density map of fire occurences of 2010
 plot(fire_density_map_2010, col=cl, main="2010")
-points(fire_austr_2010_planar,col="darkblue", pch=20, cex=0.5)
+points(fire_austr_2010_planar,col="darkblue", pch=20, cex=0.1)
 plot(austr_coastlines, add=TRUE)
 
+#we plot the density map of fire occurences of 2015
 plot(fire_density_map_2015, col=cl, main="2015")
-points(fire_austr_2015_planar,col="darkblue", pch=20, cex=0.5)
+points(fire_austr_2015_planar,col="darkblue", pch=20, cex=0.1)
 plot(austr_coastlines, add=TRUE)
 
+#we plot the density map of fire occurences of 2019
 plot(fire_density_map_2019, col=cl, main="2019")
-points(fire_austr_2019_planar,col="darkblue", pch=20, cex=0.5)
+points(fire_austr_2019_planar,col="darkblue", pch=20, cex=0.1)
 plot(austr_coastlines, add=TRUE)
 
 dev.off()
 
-#Conclusion: we observe a shift from West to North and then from North to East
+#Conclusion: we observe a shift of fire occurences from West to North and then from North to East
 
-# HOW MANY NEW BURNT AREAS FROM ONE YEAR TO ANOTHER ?
+# HOW MANY NEW FIRES OCCURENCES FROM ONE YEAR TO ANOTHER ?
 dif_map_2005_2000 <- fire_density_map_2005 - fire_density_map_2000
 cldif <- colorRampPalette(c('blue','lightblue','white','red1','red3'))(100) 
 plot(dif_map_2005_2000, col=cldif)
