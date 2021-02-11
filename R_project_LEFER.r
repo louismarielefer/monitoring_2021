@@ -125,6 +125,18 @@ plot(austr_coastlines, add=TRUE)
 
 dev.off()
 
+png("Evolution_fire_occurences_2000_2019_2.png") #to save the panel of density maps we are going to create as a png image
+par(mfrow=c(2,1)) #row with 2 lines, 1 column
+#we plot the density map of fire occurences of 2000
+plot(fire_density_map_2000, col=cl, main="2000")
+points(fire_austr_2000_planar,col="darkblue", pch=20, cex=0.1) #add fire occurences of 2000 on top
+plot(austr_coastlines, add=TRUE) #add Australian boundaries on top
+#we plot the density map of fire occurences of 2019
+plot(fire_density_map_2019, col=cl, main="2019")
+points(fire_austr_2019_planar,col="darkblue", pch=20, cex=0.1)  #add fire occurences of 2019 on top
+plot(austr_coastlines, add=TRUE) #add Australian boundaries on top
+dev.off()
+
 #Conclusion: we observe a shift of fire occurences from West to North and then from North to East
 
 # HOW MANY NEW FIRE OCCURENCES FROM ONE YEAR TO ANOTHER ?
