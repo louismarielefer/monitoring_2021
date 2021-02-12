@@ -144,8 +144,10 @@ dev.off()
 
 #difference map 2005-2000
 png("dif_map_2005_2000.png") #save the difference map as a png image
-dif_map_2005_2000 <- fire_density_map_2005 - fire_density_map_2000 #making the difference between the density map of 2005 and the one of 2000
-cldif <- colorRampPalette(c('blue','lightblue','white','red1','red3'))(100) #lowest changes in blue, highest in red
+dif_map_2005_2000 <- fire_density_map_2005 - fire_density_map_2000 
+#making the difference between the density map of 2005 and the one of 2000
+cldif <- colorRampPalette(c('blue','lightblue','white','red1','red3'))(100) 
+#lowest changes in blue, highest in red
 plot(dif_map_2005_2000, col=cldif, main="2005-2000") #plot the difference map
 plot(austr_coastlines, add=TRUE) #add the Ausralian coastlines on top
 dev.off()
@@ -177,9 +179,8 @@ dev.off()
 
 #COMPARING THE DIFFERENCE MAPS
 
-png("dif_map_comp.png") #to save the panel of difference maps we are going to create as a png image
+png("dif_map_comp.png")
 par(mfrow=c(2,3)) #row of two lines, two columns
-
 #plot the difference map "2005-2000"
 plot(dif_map_2005_2000, col=cldif, main="2005-2000")
 plot(austr_coastlines, add=TRUE)
