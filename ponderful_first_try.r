@@ -24,6 +24,7 @@ ext <- c(13.70,13.71,52.49,52.50)  # xmin xmax ymin ymax
 pond_23 <- crop(regionbis, ext)
 plot(pond_23)
 
+cl <- colorRampPalette(c('brown4','red3','red','orange2','orange','yellow2','yellow'))(100) 
 ext <- c(13,14,52,53)  # xmin xmax ymin ymax
 pond_23 <- crop(regionbis, ext)
-plot(pond_23)
+plot(pond_23, col=cl)
