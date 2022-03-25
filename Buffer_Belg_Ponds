@@ -28,3 +28,19 @@ par(mfrow=c(2,1)) #row with 2 lines, 1 column
 plotRGB(EF1_EX1, r=1, g=2, b=3, stretch="Lin", main="EF1_EX1") #r=NIR, g=red, b=green
 plotRGB(EF1_EX2, r=1, g=2, b=3, stretch="Lin", main="EF1_EX2") #r=NIR, g=red, b=green
 
+
+
+setwd("C:/ponderful2/") #setting the working directory
+library(ggplot2) #required to create barplot
+
+
+# read the csv file 
+file <- read.table("buffer_data.csv", header=TRUE, sep=",")
+temp_austr
+head(temp_austr)
+names(temp_austr) #to see the names of the variables: year and devmeanT
+summary(temp_austr) #to see the maximum difference with the mean Temperature
+attach(temp_austr) #needed in order to use the variables year and devmeanT as arguments for after
+
+png("barplot_T.png") #save the barplot we are going to create as a png image
+ggplot(temp_austr, aes(x = year, y = devmeanT)) + 
