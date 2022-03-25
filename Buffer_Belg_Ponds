@@ -1,0 +1,30 @@
+setwd("C:/ponderful2/")
+png("ponds_row.png") #to save the panel of density maps we are going to create as a png image
+par(mfrow=c(2,1)) #row with 2 lines, 1 column
+EF1_EX1 <- brick("EF1_EX1.jpg")
+plot(EF1_EX1, col=cl, main="EF1_EX1")
+
+
+dev.off()
+
+setwd("C:/ponderful2/")
+library(raster)
+library(RStoolbox) #library specific to remote sensing
+
+
+EF1_EX1 <- brick("EF1_EX1.jpg") #brick function to read raster images with several layers
+EF1_EX1 #to check how many layers
+plot(EF1_EX1) #to see the three different layers: NIR, red, green
+plotRGB(EF1_EX1, r=1, g=2, b=3, stretch="Lin", main="EF1_EX1") #r=NIR, g=red, b=green
+
+EF1_EX2 <- brick("EF1_EX2.jpg") #brick function to read raster images with several layers
+EF1_EX2 #to check how many layers
+plot(EF1_EX2) #to see the three different layers: NIR, red, green
+plotRGB(EF1_EX2, r=1, g=2, b=3, stretch="Lin", main="EF1_EX1") #r=NIR, g=red, b=green
+
+
+png("ponds_row.png") #to save the panel of density maps we are going to create as a png image
+par(mfrow=c(2,1)) #row with 2 lines, 1 column
+plotRGB(EF1_EX1, r=1, g=2, b=3, stretch="Lin", main="EF1_EX1") #r=NIR, g=red, b=green
+plotRGB(EF1_EX2, r=1, g=2, b=3, stretch="Lin", main="EF1_EX2") #r=NIR, g=red, b=green
+
